@@ -1,34 +1,25 @@
 from django.http import HttpResponseRedirect, HttpResponse
+from django.forms import modelformset_factory
+from django.conf import settings
 from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
-from .forms import LoginForm
+from .forms import UserForm
+from django import forms
 
 
-def login(request):
-    login_form = LoginForm()
+def login_view(request):
+    user_form = UserForm()
 
     if request.method == 'POST':
-        login_form = LoginForm(request.POST)
+        user_form = UserForm(request.POST)
 
-        if login_form.is_valid():
-            if login_form.cleaned_data['username'] == 'test' \
-                and login_form.cleaned_data['password'] == '1234':
+        if user_form.is_valid():
+            username = user_form.cleaned_data['username']
+            password = user_form.cleaned_data['password']
 
+            if authenticate(username=username, password=password):
                 return HttpResponseRedirect('/account')
 
-    return render(request, 'login/login.html', {'login_form': login_form})
-
-# class LoginFormView(FormView):
-#     template_name = 'login/login.html'
-#     form_class = LoginForm
-#     # success_url = 'login/login.html'
-# 
-#     def form_valid(self, form):
-#         # if form.cleaned_data['username'] == 'test' \
-#         #     and form.cleaned_data['password'] == '1234':
-#         # 
-#         #     return HttpResponseRedirect('/account')
-# 
-#         # return render(request, 'login/login.html', {'login_form': form})
-#         return super().form_valid(form)
-#         # return HttpResponse('Hello')
+    return render(request, 'login/login.html', {'user_form': user_form})

@@ -122,3 +122,22 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# login app config
+
+# from django import forms
+
+# LOGIN_FIELDS = ['username', 'password']
+# LOGIN_FIELDS_WIDGETS = {
+#             'username': forms.CharField(
+#                     label='Username',
+#                     min_length=5,
+#                     max_length=150)
+#                     # is_hidden=False),
+#             # 'password': forms.CharField(
+#             #     min_length=8,
+#             #     max_length=150,
+#             #     widget=forms.PasswordInput)
+#             #     # is_hidden=False)
+#         }
