@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.conf import settings
 from django import forms
 
 
@@ -9,4 +10,5 @@ class UserForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
 
-        self.fields['email'] = forms.EmailField(max_length=150)
+        if settings.EMAIL: 
+            self.fields['email'] = forms.EmailField(max_length=150)

@@ -16,10 +16,15 @@ def login_view(request):
         user_form = UserForm(request.POST)
 
         if user_form.is_valid():
-            username = user_form.cleaned_data['username']
-            password = user_form.cleaned_data['password']
+            auth_kwargs = {
+                'username': user_form.cleaned_data['username'],
+                'password': user_form.cleaned_data['password']
+            }
 
-            if authenticate(username=username, password=password):
+            if settings.EMAIL:
+                auth_kwargs.update({'email': user_form.cleaned_data['email']})
+
+            if authenticate(**auth_kwargs):
                 return HttpResponseRedirect('/account')
 
     return render(request, 'login/login.html', {'user_form': user_form})

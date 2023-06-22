@@ -1,4 +1,7 @@
+{% load static %}
+
 <h1>Login<h1>
+<img src="{% static 'img/pies.jpg' %}" width=300>
 <form method="post">
 	{% csrf_token %}
 	{{ user_form.as_p }}
