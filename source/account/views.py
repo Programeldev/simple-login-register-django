@@ -27,4 +27,4 @@ def login_view(request):
             if authenticate(**auth_kwargs):
                 return HttpResponseRedirect('/account')
 
-    return render(request, 'login/login.html', {'user_form': user_form})
+    return render(request, 'account/login.html', {'user_form': user_form})
