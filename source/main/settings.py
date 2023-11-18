@@ -129,6 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # account app config
 
 EMAIL = True
+LOGIN_URL = 'account/login'
 
 # from django import forms
 

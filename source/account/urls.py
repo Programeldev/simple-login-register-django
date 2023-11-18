@@ -1,10 +1,10 @@
 from django.urls import path
 
-from .views import login_view
-
+from .views import login_view, account_view
 
 app_name = 'account'
 
 urlpatterns = [
-            path('login.html', login_view)
+            path('', account_view, name='index'),
+            path('login', login_view, name='login')
         ]
