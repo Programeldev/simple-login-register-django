@@ -128,21 +128,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # account app config
 
-EMAIL = True
-LOGIN_URL = 'account/login'
+# one of this options must be 'True'.
+USE_EMAIL = True
+USE_USERNAME = True
 
-# from django import forms
-
-# LOGIN_FIELDS = ['username', 'password']
-# LOGIN_FIELDS_WIDGETS = {
-#             'username': forms.CharField(
-#                     label='Username',
-#                     min_length=5,
-#                     max_length=150)
-#                     # is_hidden=False),
-#             # 'password': forms.CharField(
-#             #     min_length=8,
-#             #     max_length=150,
-#             #     widget=forms.PasswordInput)
-#             #     # is_hidden=False)
-#         }
+REMEMBER_ME = True
+REMEMBER_ME_EXPIRY = (60 * 60 * 24) * 2

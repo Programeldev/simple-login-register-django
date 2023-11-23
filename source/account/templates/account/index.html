@@ -1,0 +1,19 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block title %} Account {% endblock %}
+
+{% block script %}
+	<script>
+		function logout()
+		{
+			location.replace("http://localhost:8000/account/logout")
+		}
+	</script>
+{% endblock %}
+
+{% block content %}
+	<h1>Hi !</h1>
+	<img src="{% static 'img/pies.jpg' %}" width=300>
+	<button onclick="logout()">Logout</button> 
+{% endblock %}

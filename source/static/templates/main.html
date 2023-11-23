@@ -4,11 +4,17 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+	<link rel="stylesheet" href="{% static 'bootstrap/bootstrap.css' %}">
+	{% block css %}{% endblock %}
+
 	<title> {% block title %} Account Page {% endblock %} </title>
 
+	<script src="{% static 'bootstrap/bootstrap.bundle.js' %}"></script>
+	{% block script %}{% endblock %}
 </head>
 <body>
-	{% block content %} <h1> Main Page - Default Content </h2> {% endblock %}
+	{% block content %} <h1> Main Page - Default Content </h1> {% endblock %}
 </body>
 </html>

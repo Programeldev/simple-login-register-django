@@ -1,13 +1,33 @@
 {% extends "main.html" %}
 {% load static %}
 
+{% block css%} 
+	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
 {% block title %} Login to Account {% endblock %}
 {% block content %}
-	<h1>Login<h1>
-	<img src="{% static 'img/pies.jpg' %}" width=300>
-	<form method="post">
-		{% csrf_token %}
-		{{ user_form.as_p }}
-		<input type="submit" value="login">
-	</form>
+	<div class="main" data-bs-theme="dark">
+		<form method="post">
+			{% csrf_token %}
+			<div class="form-floating mb-4">
+				{% if user_form.username %}
+					<input type="text" class="form-control" name="username" id="username" placeholder=" ">
+					<label for="username">Username</label>
+				{% endif %}
+			</div>
+			<div class="form-floating mb-4">
+				{% if user_form.email %}
+					<input type="email" class="form-control" name="email" id="email" placeholder=" ">
+					<label for="email">Email</label>
+				{% endif %}
+			</div>
+			<div class="form-floating mb-4">
+				{% if user_form.password %}
+					<input type="password" class="form-control mb-3" name="password" id="password" placeholder=" ">
+					<label for="password">Password</label>
+				{% endif %}
+			</div>
+			<input type="submit" class="btn btn-light btn-lg" value="Log In">
+		</form>
+	</div>
 {% endblock %}

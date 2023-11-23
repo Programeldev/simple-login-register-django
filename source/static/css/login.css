@@ -1,0 +1,19 @@
+body
+{
+	background: #e0e0e0;
+	color: white;
+}
+
+.main
+{
+	background: #9d9d9d;
+	position: fixed;
+	top: 35%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+	padding: 100px 80px 40px 80px;
+	width: 800px;
+	height: 450px;
+	border-radius: 50px;
+}
