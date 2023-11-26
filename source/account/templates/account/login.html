@@ -5,29 +5,44 @@
 	<link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 {% block title %} Login to Account {% endblock %}
+{% block script %}
+<script>
+	function redirect_signup()
+	{
+		location.replace("http://localhost:8000/account/signup")
+	}
+</script>
+{% endblock %}
 {% block content %}
 	<div class="main" data-bs-theme="dark">
 		<form method="post">
 			{% csrf_token %}
+			{% if user_form.username %}
 			<div class="form-floating mb-4">
-				{% if user_form.username %}
 					<input type="text" class="form-control" name="username" id="username" placeholder=" ">
 					<label for="username">Username</label>
-				{% endif %}
 			</div>
+			{% endif %}
+			{% if user_form.email %}
 			<div class="form-floating mb-4">
-				{% if user_form.email %}
 					<input type="email" class="form-control" name="email" id="email" placeholder=" ">
 					<label for="email">Email</label>
-				{% endif %}
 			</div>
+			{% endif %}
+			{% if user_form.password %}
 			<div class="form-floating mb-4">
-				{% if user_form.password %}
 					<input type="password" class="form-control mb-3" name="password" id="password" placeholder=" ">
 					<label for="password">Password</label>
-				{% endif %}
 			</div>
-			<input type="submit" class="btn btn-light btn-lg" value="Log In">
+			{% endif %}
+			{% if user_form.remember_me %}
+			<div class="form-check mb-4" id="remember_me_checkbox">
+				<input type="checkbox" class="form-check-input" id="remember_me">
+				<label for="remeber_me" class="form-check-label">Remember me</label>
+			</div>
+			{% endif %}
+			<input type="submit" class="btn btn-light btn-lg" value="Sign in">
 		</form>
+		<button type="button" onclick="redirect_signup()" class="btn btn-primary btn-sm mb-4" id="create_account_button">Sign up</button>
 	</div>
 {% endblock %}

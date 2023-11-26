@@ -8,14 +8,14 @@ class UserForm(forms.Form):
         super(UserForm, self).__init__(*args, **kwargs)
 
         if settings.USE_USERNAME:
-            self.fields['username'] = forms.CharField(label='Username',
-                                                      min_length=4, 
+            self.fields['username'] = forms.CharField(min_length=4, 
                                                       max_length=150)
 
         if settings.USE_EMAIL:
             self.fields['email'] = forms.EmailField(max_length=150)
 
-
         self.fields['password'] = forms.CharField(min_length=8,
                                                   max_length=150, 
                                                   widget=forms.PasswordInput)
+        if settings.REMEMBER_ME:
+            self.fields['remember_me'] = forms.BooleanField(required=False)

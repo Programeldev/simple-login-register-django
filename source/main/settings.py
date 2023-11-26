@@ -126,11 +126,13 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# account app config
+
+## account app config
 
 # one of this options must be 'True'.
 USE_EMAIL = True
 USE_USERNAME = True
 
+# remember logged users
 REMEMBER_ME = True
-REMEMBER_ME_EXPIRY = (60 * 60 * 24) * 2
+REMEMBER_ME_EXPIRY = (60 * 60 * 24) * 7

@@ -12,8 +12,18 @@ body
 	left: 50%;
 	transform: translate(-50%,-50%);
 	text-align: center;
-	padding: 100px 80px 40px 80px;
+	padding: 80px 80px 40px 80px;
 	width: 800px;
-	height: 450px;
+	height: 500px;
 	border-radius: 50px;
+}
+
+#remember_me_checkbox
+{
+	text-align: left;
+}
+
+#create_account_button
+{
+	margin-top: 30px;
 }
