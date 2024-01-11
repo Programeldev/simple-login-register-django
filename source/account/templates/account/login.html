@@ -1,8 +1,8 @@
 {% extends "main.html" %}
 {% load static %}
 
-{% block css%} 
-	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% block css %} 
+	<link rel="stylesheet" href="{% static 'account/css/login.css' %}">
 {% endblock %}
 {% block title %} Login to Account {% endblock %}
 {% block script %}
@@ -19,26 +19,26 @@
 			{% csrf_token %}
 			{% if user_form.username %}
 			<div class="form-floating mb-4">
-					<input type="text" class="form-control" name="username" id="username" placeholder=" ">
-					<label for="username">Username</label>
+				<input type="text" class="form-control" name="username" id="username" placeholder=" ">
+				<label for="username">Username</label>
 			</div>
 			{% endif %}
 			{% if user_form.email %}
 			<div class="form-floating mb-4">
-					<input type="email" class="form-control" name="email" id="email" placeholder=" ">
-					<label for="email">Email</label>
+				<input type="email" class="form-control" name="email" id="email" placeholder=" ">
+				<label for="email">Email</label>
 			</div>
 			{% endif %}
 			{% if user_form.password %}
 			<div class="form-floating mb-4">
-					<input type="password" class="form-control mb-3" name="password" id="password" placeholder=" ">
-					<label for="password">Password</label>
+				<input type="password" class="form-control mb-3" name="password" id="password" placeholder=" ">
+				<label for="password">Password</label>
 			</div>
 			{% endif %}
 			{% if user_form.remember_me %}
 			<div class="form-check mb-4" id="remember_me_checkbox">
-				<input type="checkbox" class="form-check-input" id="remember_me">
-				<label for="remeber_me" class="form-check-label">Remember me</label>
+				<input type="checkbox" class="form-check-input" name="remember_me" id="remember_me">
+				<label for="remember_me" class="form-check-label">Remember me</label>
 			</div>
 			{% endif %}
 			<input type="submit" class="btn btn-light btn-lg" value="Sign in">

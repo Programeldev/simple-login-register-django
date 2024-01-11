@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django import forms
 
+from .models import UserAvatarModel
+
 
 class UserForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -19,3 +21,9 @@ class UserForm(forms.Form):
                                                   widget=forms.PasswordInput)
         if settings.REMEMBER_ME:
             self.fields['remember_me'] = forms.BooleanField(required=False)
+
+
+class UserAvatarModelForm(forms.ModelForm):
+    class Meta:
+        model = UserAvatarModel
+        fields = ['avatar']
