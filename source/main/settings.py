@@ -128,9 +128,47 @@ MEDIA_ROOT = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Logging configuration
+
+LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        
+        'formatters': {
+            'default': {
+                'format': '{levelname}::({name}) {funcName}:{lineno}: {message}',
+                'style': '{',
+            }
+        },
+
+        'handlers': {
+            'console': {
+                'level': 'NOTSET',
+                'class': 'logging.StreamHandler',
+                'formatter': 'default'
+            }
+        },
+
+        'root': {
+            'handlers': ['console'],
+            'level': 'NOTSET'
+        },
+
+        'loggers': {
+            'simple-login-register-django.account': {
+                'handlers': ['console']
+            },
+            'simple-login-register-django.main': {
+                'handlers': ['console']
+            }
+        }
+}
 
 
-## account app config
+
+##########################
+#   account app config   #
+##########################
 
 # one of this options must be 'True'.
 USE_EMAIL = True
