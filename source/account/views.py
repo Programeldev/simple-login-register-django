@@ -1,6 +1,5 @@
 import logging
 
-from .utils.decorators import required_login
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
@@ -11,27 +10,10 @@ from django.views.generic.base import View
 from django.views.generic.edit import FormView
 
 from .forms import LoginForm, UserForm, UserAvatarModelForm
-from django import forms
+from .utils.decorators import required_login, required_guest
 
-
-
-# def required_login(func):
-#     """ Decorator to check if user is logged. """
-#     def inner(request):
-#         if not request.user.is_authenticated:
-#             return redirect('account:login')
-# 
-#         ret = func(request)
-#         return ret
-#     
-#     return inner
-
-
+@required_guest
 def login_view(request):
-    # checking if user is logged
-    if request.user.is_authenticated:
-        return redirect('account:index')
-
     login_form = LoginForm()
 
     if request.method == 'POST':
@@ -63,9 +45,10 @@ def login_view(request):
 
 @required_login
 def account_view(request):
+    log = logging.getLogger()
     if request.method == "POST":
         if 'change-avatar-submit' in request.POST:
-            pass
+            log.info('change avatar')
 
         elif 'update-account-submit' in request.POST:
             pass

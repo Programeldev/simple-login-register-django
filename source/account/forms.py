@@ -18,7 +18,7 @@ class LoginForm(forms.Form):
                                                       max_length=150)
 
         if settings.USE_EMAIL:
-            self.fields['email'] = forms.EmailField(max_length=150, validator=EmailValidator)
+            self.fields['email'] = forms.EmailField(max_length=150, validators=[EmailValidator])
 
         # Make sure if at least one option is selected from above.
         # If not, add username field for default.
