@@ -1,12 +1,14 @@
 import logging
 
 from django import forms
-from django.core.validators import EmailValidator
+from django.core.validators import MaxLengthValidator, EmailValidator
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from .models import UserAvatarModel
+from .utils.validators import NameValidator, MaxNameLengthValidator, \
+                        password_validator, username_validators, email_validators
 
 
 class LoginForm(forms.Form):
@@ -14,17 +16,15 @@ class LoginForm(forms.Form):
         super(LoginForm, self).__init__(*args, **kwargs)
 
         if settings.USE_USERNAME:
-            self.fields['username'] = forms.CharField(min_length=4, 
-                                                      max_length=150)
+            self.fields['username'] = forms.CharField(validators=username_validators)
 
         if settings.USE_EMAIL:
-            self.fields['email'] = forms.EmailField(max_length=150, validators=[EmailValidator])
+            self.fields['email'] = forms.EmailField(validators=email_validators)
 
         # Make sure if at least one option is selected from above.
         # If not, add username field for default.
         if not settings.USE_USERNAME and not settings.USE_EMAIL:
-            self.fields['username'] = forms.CharField(min_length=4, 
-                                                      max_length=150)
+            self.fields['username'] = forms.CharField(validators=username_validators)
 
             logging.getLogger(__name__).info('At least one of username or '
                                              'email field must be select. '
@@ -39,20 +39,17 @@ class LoginForm(forms.Form):
             self.fields['remember_me'] = forms.BooleanField(required=False)
 
 
-class UserForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=150)
+class UserForm(forms.Form):
+    first_name = forms.CharField(validators=[MaxNameLengthValidator, NameValidator])
 
-    last_name = forms.CharField(max_length=150)
+    last_name = forms.CharField(validators=[MaxNameLengthValidator, NameValidator])
 
-    username = forms.CharField(min_length=4,
-                               max_length=150)
+    username = forms.CharField(validators=username_validators)
 
-    email = forms.EmailField(max_length=150)
+    email = forms.EmailField(validators=email_validators)
 
     # def __init__(self, *args, **kwargs):
-    #     super(UserForm, self).__init__(*args, **kwargs)
-
-        
+        # super(UserForm, self).__init__(*args, **kwargs)
 
 
 class UserAvatarModelForm(forms.ModelForm):
