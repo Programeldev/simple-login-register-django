@@ -8,14 +8,21 @@ body
 {
 	background: #9d9d9d;
 	position: fixed;
-	top: 35%;
+	top: 40%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
-	padding: 80px 80px 40px 80px;
+	padding: 70px 80px 40px 80px;
 	width: 800px;
-	height: 500px;
+	height: 550px;
 	border-radius: 50px;
+}
+
+.invalid-label
+{
+	font-size: 18px;
+	border-radius: 8px;
+	margin-bottom: 10px;
 }
 
 #remember_me_checkbox

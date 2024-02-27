@@ -16,6 +16,7 @@ from .utils.decorators import required_login, required_guest
 @required_guest
 def login_view(request):
     login_form = LoginForm()
+    validation_failed: str = None
 
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
@@ -45,12 +46,17 @@ def login_view(request):
             else:
                 logging.getLogger(__name__).error('no logged')
 
-        logging.getLogger(__name__).info(login_form.errors.as_data())
+        else:
+            logging.getLogger(__name__).info(login_form.errors.as_data())
+            validation_failed = 'is-invalid'
+
 
     if settings.REMEMBER_ME:
         request.session.set_test_cookie()
 
-    return render(request, 'account/login.html', {'login_form': login_form})
+    return render(request, 'account/login.html', 
+                    {'login_form': login_form,
+                     'validation_failed': validation_failed})
 
 
 @required_login
