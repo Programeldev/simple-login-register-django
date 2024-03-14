@@ -20,9 +20,10 @@ body
 
 .invalid-label
 {
+    background: #CA5252;
 	font-size: 18px;
 	border-radius: 8px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 #remember_me_checkbox

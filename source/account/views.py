@@ -27,10 +27,10 @@ def login_view(request):
                     request.session.delete_test_cookie()
 
                     if login_form.cleaned_data['remember_me']:
-                            request.session.set_expiry(settings.REMEMBER_ME_EXPIRY)
+                        request.session.set_expiry(settings.REMEMBER_ME_EXPIRY)
                     else:
                         request.session.set_expiry(0)
-                            
+
                     # pop 'remember_me' because no more needed
                     login_form.cleaned_data.pop('remember_me')
 
@@ -38,6 +38,7 @@ def login_view(request):
                     logging.getLogger(__name__).error('Cookies don\'t'
                                                     ' work in this browser.')
 
+            logging.getLogger(__name__).info(login_form.cleaned_data)
             user = authenticate(**login_form.cleaned_data)
 
             if user is not None:
@@ -45,23 +46,23 @@ def login_view(request):
                 return redirect('account:index')
             else:
                 logging.getLogger(__name__).error('no logged')
+                validation_failed = 'is-invalid'
 
         else:
-            logging.getLogger(__name__).info(login_form.errors.as_data())
             validation_failed = 'is-invalid'
-
 
     if settings.REMEMBER_ME:
         request.session.set_test_cookie()
 
-    return render(request, 'account/login.html', 
-                    {'login_form': login_form,
-                     'validation_failed': validation_failed})
+    return render(request, 'account/login.html',
+                  {'login_form': login_form,
+                   'validation_failed': validation_failed})
 
 
 @required_login
 def account_view(request):
-    log = logging.getLogger()
+    is_fields_valid = {}
+    log = logging.getLogger(__name__)
 
     if request.method == "POST":
         if 'change-avatar-submit' in request.POST:
@@ -71,25 +72,29 @@ def account_view(request):
             log.info('change account')
             user_form = UserForm(request.POST)
 
-            try:
-                if user_form.is_valid():
-                    log.info(user_from.cleaned_data['last_name'])
+            if user_form.is_valid():
+                log.info('everything is correct!')
+            else:
+                is_fields_valid = dict.fromkeys(user_form.cleaned_data.keys())
+                invalid_fields = user_form.errors.as_data().keys()
 
-                log.info(user_form.errors.as_data())
+                for field in invalid_fields:
+                    is_fields_valid[field] = 'is-invalid'
 
-            except ValidationError as ve:
-                log.error('validator error')
+                log.error('validation failed!')
 
     user_form = get_user(request)
 
-    return render(request, 'account/index.html', {'user_form': user_form}) 
+    return render(request, 'account/index.html',
+                  {'user_form': user_form,
+                   'is_fields_valid': is_fields_valid})
 
 
 def logout_view(request):
     logout(request)
-    return redirect('account:login') 
+    return redirect('account:login')
 
 
-@required_login
-def change_avatar_view(request):
-    pass
+# @required_login
+# def change_avatar_view(request):
+#     pass

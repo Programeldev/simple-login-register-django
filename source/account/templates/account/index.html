@@ -46,25 +46,25 @@
 					<div class="row mb-4">
 						<label for="inputFName" class="col-sm-2 col-form-label">First Name</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="inputFName" value="{{ user_form.first_name }}" name="first_name">
+                            <input type="text" class="form-control {{ is_fields_valid.first_name }}" id="inputFName" value="{{ user_form.first_name }}" name="first_name">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputLName" class="col-sm-2 col-form-label">Last Name</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="inputLName" value="{{ user_form.last_name  }}" name="last_name">
+							<input type="text" class="form-control {{ is_fields_valid.last_name }}" id="inputLName" value="{{ user_form.last_name  }}" name="last_name">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="inputUsername" value="{{ user_form.username  }}" name="username">
+							<input type="text" class="form-control {{ is_fields_valid.username }}" id="inputUsername" value="{{ user_form.username  }}" name="username">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
 						<div class="col-sm-5">
-							<input type="text" class="form-control" id="inputEmail" value="{{ user_form.email  }}" name="email">
+							<input type="text" class="form-control {{ is_fields_valid.email }}" id="inputEmail" value="{{ user_form.email  }}" name="email">
 						</div>
 					</div>
 					<div class="row">
@@ -72,7 +72,7 @@
 							<label for="inputPassword" class="col-form-label">Password</label>
 						</div>
 						<div class="col-auto">
-							<input type="text" class="form-control" id="inputPassword" name="password">
+							<input type="text" class="form-control {{ is_fields_valid.password }}" id="inputPassword" name="password">
 						</div>
 						<div class="col-auto">
 							<input type="text" class="form-control">

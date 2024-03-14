@@ -16,7 +16,7 @@
 {% block content %}
 	<div class="main" data-bs-theme="dark">
 		{% if validation_failed %}
-		<span class="placeholder invalid-label col-10 bg-danger">Login or password is invalid, try again</span>
+		<p class="invalid-label">Login or password is invalid, try again</p>
 		{% endif %}
 		<form method="post">
 			{% csrf_token %}
