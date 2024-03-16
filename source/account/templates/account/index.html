@@ -78,19 +78,50 @@
 							<input type="text" class="form-control">
 						</div>
 						<div class="col-auto">
-							<label class="col-form-label" id="password-sublabel">Must be above 8 characters</label>
+							<label class="col-form-label password-sublabel">Must be above 8 characters</label>
 						</div>
 					</div>
 				</div>
 			</form>
-			<div class="dropdown">
-				<button class="btn btn-danger dropdown-toggle dropdown-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Errors <span class="badge text-bg-warning">2<span>
-				</button>
-				<ul class="dropdown-menu">
-					<li>test</li>
-				</ul>
-			</div>
+{{ validation_errors|safe }}
+			<!-- <div class="overflow-auto errors-textbox"> -->
+   <!--              <table> -->
+   <!--                  <tr> -->
+   <!--                      <th> -->
+			<!-- 		        <span>first_name: </span> -->
+   <!--                      </th> -->
+			<!-- 	        <th> -->
+			<!-- 		        <span>This field is required.</span> -->
+   <!--                      </th> -->
+   <!--                  </tr> -->
+   <!--                  <tr> -->
+			<!-- 	        <th> -->
+			<!-- 		        <span>last_name: </span> -->
+			<!-- 	        </th> -->
+			<!-- 	        <th> -->
+   <!--                          <span>This field is required.</span><br> -->
+   <!--                          <span>This field is required.</span><br> -->
+			<!-- 				<span>This field is required.</span><br> -->
+			<!-- 	        </th> -->
+   <!--                  </tr> -->
+   <!--                  <tr> -->
+			<!-- 	        <th> -->
+			<!-- 		        <span>last_name: </span> -->
+			<!-- 	        </th> -->
+			<!-- 	        <th> -->
+			<!-- 		        <span>This field is required.</span> -->
+			<!-- 	        </th> -->
+   <!--                  </tr> -->
+   <!--                  <tr> -->
+			<!-- 	        <th> -->
+			<!-- 		        <span>last_name: </span> -->
+			<!-- 	        </th> -->
+			<!-- 	        <th> -->
+			<!-- 		        <span>This field is required.</span> -->
+			<!-- 	        </th> -->
+   <!--                  </tr> -->
+   <!--              </table> -->
+   <!--          </div>             -->
 		</div>
 		<div class="options-menu">
 			<div class="row">

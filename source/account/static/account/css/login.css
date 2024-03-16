@@ -26,12 +26,12 @@ body
 	margin-bottom: 20px;
 }
 
-#remember_me_checkbox
+.remember_me_checkbox
 {
 	text-align: left;
 }
 
-#create_account_button
+.create_account_button
 {
 	margin-top: 30px;
 }

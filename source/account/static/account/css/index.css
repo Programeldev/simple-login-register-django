@@ -86,10 +86,10 @@ body
 .choose-avatar-button
 {
 	font-size: 16px;
-	margin-top: 100px;
 	width: 350px;
 	height: 38px;
 	margin-left: 150px;
+	margin-top: 100px;
 }
 
 .change-avatar-button
@@ -100,17 +100,34 @@ body
 	margin-top: 50px;
 }
 
-.dropdown-button
-{
-	background: #c63f3f;
-	font-size: 30px;
-	width: 250px;
-	height: 60px;
-}
 
-#password-sublabel
+.password-sublabel
 {
 	font-size: 18px;
 	font-style: italic;
 	color: #cacaca;
+}
+
+.errors-textbox
+{
+    background: #1A1A1A;
+    font-size: 16px;
+    color: #FA5C5C;
+    text-align: left;
+    width: 600px;
+    height: 100px;
+    margin-left: 20%;
+    border-radius: 10px;
+}
+
+table, tr, th
+{
+	padding-left: 8px;
+    vertical-align: top;
+	
+}
+
+.invalid-field
+{
+	text-align: right;
 }

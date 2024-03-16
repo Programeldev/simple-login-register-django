@@ -39,13 +39,13 @@
 			</div>
 			{% endif %}
 			{% if login_form.remember_me %}
-			<div class="form-check mb-4" id="remember_me_checkbox">
+			<div class="form-check mb-4 remember_me_checkbox">
 				<input type="checkbox" class="form-check-input" name="remember_me" id="remember_me">
 				<label for="remember_me" class="form-check-label">Remember me</label>
 			</div>
 			{% endif %}
 			<input type="submit" class="btn btn-light btn-lg" value="Sign in">
 		</form>
-		<button type="button" onclick="redirect_signup()" class="btn btn-primary btn-sm mb-4" id="create_account_button">Sign up</button>
+		<button type="button" onclick="redirect_signup()" class="btn btn-primary btn-sm mb-4 create_account_button">Sign up</button>
 	</div>
 {% endblock %}

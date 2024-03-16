@@ -17,12 +17,12 @@ username_validators = [
     MaxLengthValidator(150, 'Too long username (max 150).')
 ]
 
-email_validators = [ 
+email_validators = [
     MaxLengthValidator(150, 'Too long email (max 150).'),
     EmailValidator
 ]
 
-## Password validator regex function
+# Password validator regex function
 # check if is required characters:
 # - digit
 # - uppercase letter

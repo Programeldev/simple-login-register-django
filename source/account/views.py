@@ -1,16 +1,16 @@
 import logging
 
-from django.http import HttpResponseRedirect, HttpResponse
+# from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
-from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user
-from django.contrib.auth.models import User
-from django.views.generic.base import View
-from django.views.generic.edit import FormView
+# from django.contrib.auth.models import User
+# from django.views.generic.base import View
+# from django.views.generic.edit import FormView
 
 from .forms import LoginForm, UserForm, UserAvatarModelForm
 from .utils.decorators import required_login, required_guest
+from .utils.gen_html_validation_errors import gen_html_validation_errors
 
 
 @required_guest
@@ -62,6 +62,7 @@ def login_view(request):
 @required_login
 def account_view(request):
     is_fields_valid = {}
+    validation_errors = {}
     log = logging.getLogger(__name__)
 
     if request.method == "POST":
@@ -75,6 +76,8 @@ def account_view(request):
             if user_form.is_valid():
                 log.info('everything is correct!')
             else:
+                validation_errors = gen_html_validation_errors(
+                                        user_form.errors.get_json_data())
                 is_fields_valid = dict.fromkeys(user_form.cleaned_data.keys())
                 invalid_fields = user_form.errors.as_data().keys()
 
@@ -87,7 +90,8 @@ def account_view(request):
 
     return render(request, 'account/index.html',
                   {'user_form': user_form,
-                   'is_fields_valid': is_fields_valid})
+                   'is_fields_valid': is_fields_valid,
+                   'validation_errors': validation_errors})
 
 
 def logout_view(request):

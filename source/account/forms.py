@@ -39,12 +39,13 @@ class LoginForm(forms.Form):
 
 
 class UserForm(forms.Form):
-    first_name = forms.CharField(validators=name_validators)
-    last_name = forms.CharField(validators=name_validators)
-    username = forms.CharField(validators=username_validators)
-    email = forms.EmailField(validators=email_validators)
+    first_name = forms.CharField(validators=name_validators, required=False)
+    last_name = forms.CharField(validators=name_validators, required=False)
+    username = forms.CharField(validators=username_validators, required=False)
+    email = forms.EmailField(validators=email_validators, required=False)
     password = forms.CharField(widget=forms.PasswordInput,
-                               validators=password_validators)
+                               validators=password_validators,
+                               required=False)
 
     # def __init__(self, *args, **kwargs):
         # super(UserForm, self).__init__(*args, **kwargs)
