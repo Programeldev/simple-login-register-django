@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from .utils.avatar_path import avatar_path
+
 
 class UserAvatarModel(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True)
-    avatar = models.ImageField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             primary_key=True)
+    avatar = models.ImageField(upload_to=avatar_path)

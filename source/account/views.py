@@ -1,14 +1,16 @@
 import logging
+from django.db import models
 
 # from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout, get_user
+from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.models import User
 # from django.views.generic.base import View
 # from django.views.generic.edit import FormView
 
 from .forms import LoginForm, UserForm, UserAvatarModelForm
+from .models import UserAvatarModel
 from .utils.decorators import required_login, required_guest
 from .utils.gen_html_validation_errors import gen_html_validation_errors
 
@@ -61,13 +63,29 @@ def login_view(request):
 
 @required_login
 def account_view(request):
-    is_fields_valid = {}
-    validation_errors = {}
+    is_fields_valid: dict = None
+    validation_errors = ''
     log = logging.getLogger(__name__)
 
     if request.method == "POST":
         if 'change-avatar-submit' in request.POST:
             log.info('change avatar')
+
+            user_avatar_form = UserAvatarModelForm(request.POST, request.FILES)
+            if user_avatar_form.is_valid():
+                log.info('valid avatar')
+                # UserAvatarModel.objects.update_or_create(user=request.user,
+                #     defaults={'avatar': user_avatar_form.cleaned_data['avatar']},
+                #     create_defaults={'user': request.user,
+                #                     'avatar': user_avatar_form.cleaned_data['avatar']})
+
+                # result = UserAvatarModel.objects.filter(user=request.user) \
+                #     .update(avatar=user_avatar_form.cleaned_data['avatar'])
+                #
+                # if not result:
+                #     pass
+            else:
+                log.info('nope valid avatar')
 
         elif 'update-account-submit' in request.POST:
             log.info('change account')
@@ -86,7 +104,7 @@ def account_view(request):
 
                 log.error('validation failed!')
 
-    user_form = get_user(request)
+    user_form = request.user
 
     return render(request, 'account/index.html',
                   {'user_form': user_form,

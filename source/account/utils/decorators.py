@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 
 
@@ -10,7 +9,7 @@ def required_login(func):
 
         ret = func(request)
         return ret
-    
+
     return inner
 
 
@@ -22,5 +21,5 @@ def required_guest(func):
 
         ret = func(request)
         return ret
-    
+
     return inner

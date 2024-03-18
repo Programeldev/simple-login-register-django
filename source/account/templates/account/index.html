@@ -34,7 +34,7 @@
 			<br>
 			<form method="post" enctype="multipart/form-data">
 				{% csrf_token %}
-				<input type="file" class="form-control choose-avatar-button" name="avatar" accept=".jpg, .png">
+				<input type="file" class="form-control choose-avatar-button" name="avatar" accept=".jpg, .png .bmp">
 				<button type="submit" class="form-control btn btn-success change-avatar-button" name="change-avatar-submit">change avatar</button>
 			</form>
 		</div>
@@ -84,44 +84,6 @@
 				</div>
 			</form>
 {{ validation_errors|safe }}
-			<!-- <div class="overflow-auto errors-textbox"> -->
-   <!--              <table> -->
-   <!--                  <tr> -->
-   <!--                      <th> -->
-			<!-- 		        <span>first_name: </span> -->
-   <!--                      </th> -->
-			<!-- 	        <th> -->
-			<!-- 		        <span>This field is required.</span> -->
-   <!--                      </th> -->
-   <!--                  </tr> -->
-   <!--                  <tr> -->
-			<!-- 	        <th> -->
-			<!-- 		        <span>last_name: </span> -->
-			<!-- 	        </th> -->
-			<!-- 	        <th> -->
-   <!--                          <span>This field is required.</span><br> -->
-   <!--                          <span>This field is required.</span><br> -->
-			<!-- 				<span>This field is required.</span><br> -->
-			<!-- 	        </th> -->
-   <!--                  </tr> -->
-   <!--                  <tr> -->
-			<!-- 	        <th> -->
-			<!-- 		        <span>last_name: </span> -->
-			<!-- 	        </th> -->
-			<!-- 	        <th> -->
-			<!-- 		        <span>This field is required.</span> -->
-			<!-- 	        </th> -->
-   <!--                  </tr> -->
-   <!--                  <tr> -->
-			<!-- 	        <th> -->
-			<!-- 		        <span>last_name: </span> -->
-			<!-- 	        </th> -->
-			<!-- 	        <th> -->
-			<!-- 		        <span>This field is required.</span> -->
-			<!-- 	        </th> -->
-   <!--                  </tr> -->
-   <!--              </table> -->
-   <!--          </div>             -->
 		</div>
 		<div class="options-menu">
 			<div class="row">

@@ -47,9 +47,6 @@ class UserForm(forms.Form):
                                validators=password_validators,
                                required=False)
 
-    # def __init__(self, *args, **kwargs):
-        # super(UserForm, self).__init__(*args, **kwargs)
-
 
 class UserAvatarModelForm(forms.ModelForm):
     class Meta:
