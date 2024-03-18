@@ -22,19 +22,19 @@
 			{% csrf_token %}
 			{% if login_form.username %}
 			<div class="form-floating mb-4">
-				<input type="text" class="form-control {{ validation_failed }}" name="username" id="username" placeholder=" ">
+				<input type="text" class="form-control {{ validation_failed|safe }}" name="username" id="username" placeholder=" ">
 				<label for="username">Username</label>
 			</div>
 			{% endif %}
 			{% if login_form.email %}
 			<div class="form-floating mb-4">
-				<input type="email" class="form-control {{ validation_failed }}" name="email" id="email" placeholder=" ">
+				<input type="email" class="form-control {{ validation_failed|safe }}" name="email" id="email" placeholder=" ">
 				<label for="email">Email</label>
 			</div>
 			{% endif %}
 			{% if login_form.password %}
 			<div class="form-floating mb-4">
-				<input type="password" class="form-control mb-3 {{ validation_failed }}" name="password" id="password" placeholder=" ">
+				<input type="password" class="form-control mb-3 {{ validation_failed|safe }}" name="password" id="password" placeholder=" ">
 				<label for="password">Password</label>
 			</div>
 			{% endif %}

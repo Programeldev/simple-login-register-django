@@ -12,18 +12,6 @@
 		{
 			location.replace("http://localhost:8000/account/logout")
 		}
-
-		//function checkSelectedAvatar()
-		//{
-		//	if(document.getElementById("choose-avatar-button").value != "")
-		//	{
-		//		document.getElementById("change-avatar-button").disabled = false;
-		//	}
-		//	else
-		//	{
-		//		document.getElementById("change-avatar-button").disabled = true;
-		//	}
-		//}
 	</script>
 {% endblock %}
 
@@ -39,32 +27,32 @@
 			</form>
 		</div>
 		<div class="account-data">
-			<label class="date-joined-label">registration date: {{ user.date_joined }}</label>
+			<label class="date-joined-label">registration date: {{ user.date_joined|safe }}</label>
 			<form method="post" id="account-data-form">
 				{% csrf_token %}
 				<div class="container">
 					<div class="row mb-4">
 						<label for="inputFName" class="col-sm-2 col-form-label">First Name</label>
 						<div class="col-sm-4">
-                            <input type="text" class="form-control {{ is_fields_valid.first_name }}" id="inputFName" value="{{ user_form.first_name }}" name="first_name">
+							<input type="text" class="form-control{{ is_fields_valid.first_name|safe }}" id="inputFName" value="{{ user_form.first_name|safe }}" name="first_name">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputLName" class="col-sm-2 col-form-label">Last Name</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control {{ is_fields_valid.last_name }}" id="inputLName" value="{{ user_form.last_name  }}" name="last_name">
+							<input type="text" class="form-control{{ is_fields_valid.last_name|safe }}" id="inputLName" value="{{ user_form.last_name|safe  }}" name="last_name">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control {{ is_fields_valid.username }}" id="inputUsername" value="{{ user_form.username  }}" name="username">
+							<input type="text" class="form-control{{ is_fields_valid.username|safe }}" id="inputUsername" value="{{ user_form.username|safe  }}" name="username">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
 						<div class="col-sm-5">
-							<input type="text" class="form-control {{ is_fields_valid.email }}" id="inputEmail" value="{{ user_form.email  }}" name="email">
+							<input type="text" class="form-control{{ is_fields_valid.email|safe }}" id="inputEmail" value="{{ user_form.email|safe  }}" name="email">
 						</div>
 					</div>
 					<div class="row">
@@ -72,7 +60,7 @@
 							<label for="inputPassword" class="col-form-label">Password</label>
 						</div>
 						<div class="col-auto">
-							<input type="text" class="form-control {{ is_fields_valid.password }}" id="inputPassword" name="password">
+							<input type="text" class="form-control{{ is_fields_valid.password|safe }}" id="inputPassword" name="password">
 						</div>
 						<div class="col-auto">
 							<input type="text" class="form-control">
