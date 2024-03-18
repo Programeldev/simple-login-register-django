@@ -34,7 +34,7 @@
 			<br>
 			<form method="post" enctype="multipart/form-data">
 				{% csrf_token %}
-				<input type="file" class="form-control choose-avatar-button" name="avatar" accept=".jpg, .png">
+				<input type="file" class="form-control choose-avatar-button" name="avatar" accept=".jpg, .png .bmp">
 				<button type="submit" class="form-control btn btn-success change-avatar-button" name="change-avatar-submit">change avatar</button>
 			</form>
 		</div>
@@ -46,25 +46,25 @@
 					<div class="row mb-4">
 						<label for="inputFName" class="col-sm-2 col-form-label">First Name</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="inputFName" value="{{ user_form.first_name }}" name="first_name">
+                            <input type="text" class="form-control {{ is_fields_valid.first_name }}" id="inputFName" value="{{ user_form.first_name }}" name="first_name">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputLName" class="col-sm-2 col-form-label">Last Name</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="inputLName" value="{{ user_form.last_name  }}" name="last_name">
+							<input type="text" class="form-control {{ is_fields_valid.last_name }}" id="inputLName" value="{{ user_form.last_name  }}" name="last_name">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="inputUsername" value="{{ user_form.username  }}" name="username">
+							<input type="text" class="form-control {{ is_fields_valid.username }}" id="inputUsername" value="{{ user_form.username  }}" name="username">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
 						<div class="col-sm-5">
-							<input type="text" class="form-control" id="inputEmail" value="{{ user_form.email  }}" name="email">
+							<input type="text" class="form-control {{ is_fields_valid.email }}" id="inputEmail" value="{{ user_form.email  }}" name="email">
 						</div>
 					</div>
 					<div class="row">
@@ -72,25 +72,18 @@
 							<label for="inputPassword" class="col-form-label">Password</label>
 						</div>
 						<div class="col-auto">
-							<input type="text" class="form-control" id="inputPassword" name="password">
+							<input type="text" class="form-control {{ is_fields_valid.password }}" id="inputPassword" name="password">
 						</div>
 						<div class="col-auto">
 							<input type="text" class="form-control">
 						</div>
 						<div class="col-auto">
-							<label class="col-form-label" id="password-sublabel">Must be above 8 characters</label>
+							<label class="col-form-label password-sublabel">Must be above 8 characters</label>
 						</div>
 					</div>
 				</div>
 			</form>
-			<div class="dropdown">
-				<button class="btn btn-danger dropdown-toggle dropdown-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Errors <span class="badge text-bg-warning">2<span>
-				</button>
-				<ul class="dropdown-menu">
-					<li>test</li>
-				</ul>
-			</div>
+{{ validation_errors|safe }}
 		</div>
 		<div class="options-menu">
 			<div class="row">

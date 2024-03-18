@@ -8,22 +8,30 @@ body
 {
 	background: #9d9d9d;
 	position: fixed;
-	top: 35%;
+	top: 40%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
-	padding: 80px 80px 40px 80px;
+	padding: 70px 80px 40px 80px;
 	width: 800px;
-	height: 500px;
+	height: 550px;
 	border-radius: 50px;
 }
 
-#remember_me_checkbox
+.invalid-label
+{
+    background: #CA5252;
+	font-size: 18px;
+	border-radius: 8px;
+	margin-bottom: 20px;
+}
+
+.remember_me_checkbox
 {
 	text-align: left;
 }
 
-#create_account_button
+.create_account_button
 {
 	margin-top: 30px;
 }

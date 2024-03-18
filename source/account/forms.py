@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from .models import UserAvatarModel
-from .utils.validators import NameValidator, MaxNameLengthValidator, \
-                        password_validator, username_validators, email_validators
+from .utils.validators import name_validators, password_validators, \
+                            username_validators, email_validators
 
 
 class LoginForm(forms.Form):
@@ -31,25 +31,21 @@ class LoginForm(forms.Form):
                                              'Selected username field for '
                                              'default.')
 
-        self.fields['password'] = forms.CharField(min_length=8,
-                                                  max_length=150, 
-                                                  widget=forms.PasswordInput)
+        self.fields['password'] = forms.CharField(widget=forms.PasswordInput,
+                                                  validators=password_validators)
 
         if settings.REMEMBER_ME:
             self.fields['remember_me'] = forms.BooleanField(required=False)
 
 
 class UserForm(forms.Form):
-    first_name = forms.CharField(validators=[MaxNameLengthValidator, NameValidator])
-
-    last_name = forms.CharField(validators=[MaxNameLengthValidator, NameValidator])
-
-    username = forms.CharField(validators=username_validators)
-
-    email = forms.EmailField(validators=email_validators)
-
-    # def __init__(self, *args, **kwargs):
-        # super(UserForm, self).__init__(*args, **kwargs)
+    first_name = forms.CharField(validators=name_validators, required=False)
+    last_name = forms.CharField(validators=name_validators, required=False)
+    username = forms.CharField(validators=username_validators, required=False)
+    email = forms.EmailField(validators=email_validators, required=False)
+    password = forms.CharField(widget=forms.PasswordInput,
+                               validators=password_validators,
+                               required=False)
 
 
 class UserAvatarModelForm(forms.ModelForm):
