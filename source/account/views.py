@@ -18,7 +18,7 @@ from .utils.gen_html_validation_errors import gen_html_validation_errors
 @required_guest
 def login_view(request):
     login_form = LoginForm()
-    validation_failed: str = None
+    validation_failed = ''
 
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
@@ -35,7 +35,6 @@ def login_view(request):
 
                     # pop 'remember_me' because no more needed
                     login_form.cleaned_data.pop('remember_me')
-
                 else:
                     logging.getLogger(__name__).error('Cookies don\'t'
                                                     ' work in this browser.')
@@ -49,7 +48,6 @@ def login_view(request):
             else:
                 logging.getLogger(__name__).error('no logged')
                 validation_failed = 'is-invalid'
-
         else:
             validation_failed = 'is-invalid'
 
@@ -96,7 +94,8 @@ def account_view(request):
             else:
                 validation_errors = gen_html_validation_errors(
                                         user_form.errors.get_json_data())
-                is_fields_valid = dict.fromkeys(user_form.cleaned_data.keys())
+                is_fields_valid = \
+                        dict.fromkeys(user_form.cleaned_data.keys(), '')
                 invalid_fields = user_form.errors.as_data().keys()
 
                 for field in invalid_fields:
