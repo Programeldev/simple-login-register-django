@@ -43,9 +43,9 @@ class UserForm(forms.Form):
     last_name = forms.CharField(validators=name_validators, required=False)
     username = forms.CharField(validators=username_validators, required=False)
     email = forms.EmailField(validators=email_validators, required=False)
-    password = forms.CharField(widget=forms.PasswordInput,
-                               validators=password_validators,
-                               required=False)
+    # password = forms.CharField(widget=forms.PasswordInput,
+    #                            validators=password_validators,
+    #                            required=False)
 
 
 class UserAvatarModelForm(forms.ModelForm):

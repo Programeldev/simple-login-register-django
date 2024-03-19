@@ -1,18 +1,21 @@
 import logging
-from django.db import models
+from pathlib import Path
 
-# from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
+from django.db import models
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth.models import User
-# from django.views.generic.base import View
-# from django.views.generic.edit import FormView
+from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
 
 from .forms import LoginForm, UserForm, UserAvatarModelForm
 from .models import UserAvatarModel
 from .utils.decorators import required_login, required_guest
 from .utils.gen_html_validation_errors import gen_html_validation_errors
+
+
+
+log = logging.getLogger(__name__)
 
 
 @required_guest
@@ -39,14 +42,16 @@ def login_view(request):
                     logging.getLogger(__name__).error('Cookies don\'t'
                                                     ' work in this browser.')
 
-            logging.getLogger(__name__).info(login_form.cleaned_data)
             user = authenticate(**login_form.cleaned_data)
+            # user = authenticate(username=login_form.cleaned_data['username'],
+            #                     password=login_form.cleaned_data['password'])
 
             if user is not None:
+                log.info('auth ok')
                 login(request, user)
                 return redirect('account:index')
             else:
-                logging.getLogger(__name__).error('no logged')
+                log.info('auth nein')
                 validation_failed = 'is-invalid'
         else:
             validation_failed = 'is-invalid'
@@ -63,34 +68,43 @@ def login_view(request):
 def account_view(request):
     is_fields_valid: dict = None
     validation_errors = ''
-    log = logging.getLogger(__name__)
+    user_avatar: UserAvatarModel = None
+    avatar_name: str = None
+
+    try:
+        user_avatar = UserAvatarModel.objects.get(user=request.user)
+        avatar_name = user_avatar.avatar.name
+    except models.ObjectDoesNotExist:
+        avatar_name = None
 
     if request.method == "POST":
         if 'change-avatar-submit' in request.POST:
-            log.info('change avatar')
-
             user_avatar_form = UserAvatarModelForm(request.POST, request.FILES)
             if user_avatar_form.is_valid():
-                log.info('valid avatar')
-                # UserAvatarModel.objects.update_or_create(user=request.user,
-                #     defaults={'avatar': user_avatar_form.cleaned_data['avatar']},
-                #     create_defaults={'user': request.user,
-                #                     'avatar': user_avatar_form.cleaned_data['avatar']})
+                if avatar_name:
+                    # Delete old avatar from BASE_DIR/media/
+                    Path(user_avatar.avatar.path).unlink(missing_ok=True)
 
-                # result = UserAvatarModel.objects.filter(user=request.user) \
-                #     .update(avatar=user_avatar_form.cleaned_data['avatar'])
-                #
-                # if not result:
-                #     pass
+                    # Updating avatar to new
+                    user_avatar.avatar = \
+                        user_avatar_form.cleaned_data['avatar']
+                    user_avatar.save()
+                    avatar_name = user_avatar.avatar.name
+                else:
+                    user_avatar = \
+                        UserAvatarModel.objects.create(user=request.user,
+                                avatar=user_avatar_form.cleaned_data['avatar'])
+                    avatar_name = user_avatar.avatar.name
             else:
                 log.info('nope valid avatar')
 
         elif 'update-account-submit' in request.POST:
-            log.info('change account')
             user_form = UserForm(request.POST)
 
             if user_form.is_valid():
-                log.info('everything is correct!')
+                log.info(user_form.cleaned_data)
+                User.objects.filter(id=request.user.id) \
+                            .update(**user_form.cleaned_data)
             else:
                 validation_errors = gen_html_validation_errors(
                                         user_form.errors.get_json_data())
@@ -101,14 +115,14 @@ def account_view(request):
                 for field in invalid_fields:
                     is_fields_valid[field] = 'is-invalid'
 
-                log.error('validation failed!')
 
     user_form = request.user
 
     return render(request, 'account/index.html',
                   {'user_form': user_form,
                    'is_fields_valid': is_fields_valid,
-                   'validation_errors': validation_errors})
+                   'validation_errors': validation_errors,
+                   'avatar_name': avatar_name})
 
 
 def logout_view(request):

@@ -18,7 +18,11 @@
 {% block content %}
 	<div class="main" data-bs-theme="dark">
 		<div class="account-avatar">
-			<img class="account-avatar-image" src="{% static 'img/pies.jpg' %}">
+			{% if avatar_name %}
+			<img class="account-avatar-image" src="{% static avatar_name %}">
+			{% else %}
+			<img class="account-avatar-image" src="{% static 'account/default_avatar.png' %}">
+			{% endif %}
 			<br>
 			<form method="post" enctype="multipart/form-data">
 				{% csrf_token %}
@@ -60,7 +64,8 @@
 							<label for="inputPassword" class="col-form-label">Password</label>
 						</div>
 						<div class="col-auto">
-							<input type="text" class="form-control {{ is_fields_valid.password|safe }}" id="inputPassword" name="password">
+							<input type="text" class="form-control {{ is_fields_valid.password|safe }}" id="inputPassword">
+							<!-- name="password" -->
 						</div>
 						<div class="col-auto">
 							<input type="text" class="form-control">
