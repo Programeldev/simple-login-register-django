@@ -39,8 +39,8 @@ body
 	background: gray;
 	display: grid;
 	grid-area: data;
-	margin: 3%;
-	padding: 4%;
+	margin: 20px;
+	padding: 10px;
 	text-align: center;
 	font-size: 130%;
 	border-radius: 140px;
@@ -88,8 +88,8 @@ body
 	font-size: 16px;
 	width: 350px;
 	height: 38px;
-	margin-left: 150px;
-	margin-top: 100px;
+	margin-left: 200px;
+	margin-top: 50px;
 }
 
 .change-avatar-button
@@ -100,6 +100,15 @@ body
 	margin-top: 50px;
 }
 
+.account-avatar-error
+{
+    background: #CA5252;
+	font-size: 18px;
+	width: 450px;
+	border-radius: 15px;
+	margin-top: 40px;
+	margin-left: 140px;
+}
 
 .password-sublabel
 {

@@ -33,6 +33,7 @@ class LoginForm(forms.Form):
 
         self.fields['password'] = forms.CharField(widget=forms.PasswordInput,
                                                   validators=password_validators)
+        # self.fields['password'] = forms.CharField(widget=forms.PasswordInput)
 
         if settings.REMEMBER_ME:
             self.fields['remember_me'] = forms.BooleanField(required=False)

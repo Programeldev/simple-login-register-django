@@ -23,7 +23,11 @@
 			{% else %}
 			<img class="account-avatar-image" src="{% static 'account/default_avatar.png' %}">
 			{% endif %}
-			<br>
+			{% if is_fields_valid.avatar %}
+			<div class="account-avatar-error">
+				<span>Failed to upload new Avatar, try again</span>
+			</div>
+			{% endif %}
 			<form method="post" enctype="multipart/form-data">
 				{% csrf_token %}
 				<input type="file" class="form-control choose-avatar-button" name="avatar" accept=".jpg, .png .bmp">
