@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTHENTICATION_BACKENDS = ['main.auth_backend.AuthBackend']
 
 # Application definition
 
