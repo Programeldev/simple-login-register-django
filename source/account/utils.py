@@ -1,6 +1,10 @@
 from io import StringIO
 
 
+def avatar_path(instance, filename):
+    return '{}_avatar_{}'.format(instance.user.id, filename)
+
+
 def gen_html_validation_errors(invalid_fields):
     if not isinstance(invalid_fields, dict):
         raise TypeError('"invalid_fields" is not dict instance.')

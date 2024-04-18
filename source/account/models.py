@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from .utils.avatar_path import avatar_path
+from .utils import avatar_path
 
 
 class UserAvatarModel(models.Model):
