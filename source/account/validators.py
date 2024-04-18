@@ -8,7 +8,9 @@ from django.core.validators import RegexValidator, MaxLengthValidator, \
 
 # find any decimal digit and characters oder than alphabetic
 name_validators = [
-    RegexValidator('[^a-zA-z_]', inverse_match=True),
+    RegexValidator(r'[^a-zA-z_]',
+                   message='Only alphabetic letters are allowed.',
+                   inverse_match=True),
     MaxLengthValidator(150, 'Name is too long (max 150).')
 ]
 
@@ -22,6 +24,7 @@ email_validators = [
     EmailValidator
 ]
 
+
 # Password validator regex function
 # check if is required characters:
 # - digit
@@ -29,16 +32,18 @@ email_validators = [
 # - character oder than alphanumeric
 def password_regex_validator(password):
     regex = [
-        re.compile('[A-Z]'),
-        re.compile('\d'),
-        re.compile('\W')
+        re.compile(r'[a-z]'),
+        re.compile(r'[A-Z]'),
+        re.compile(r'[0-9]'),
+        re.compile(r'\W')
     ]
 
     for r in regex:
-        if r.match(password) is not None:
+        if r.findall(password) is None:
             raise ValidationError(_('Invalid password. Must have digit, '
                                 'one uppercase letter and special character.'),
                                 code='invalid password')
+
 
 password_validators = [
     MinLengthValidator(8, 'Too short password (min 8).'),

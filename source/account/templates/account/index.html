@@ -23,7 +23,11 @@
 			{% else %}
 			<img class="account-avatar-image" src="{% static 'account/default_avatar.png' %}">
 			{% endif %}
-			<br>
+			{% if is_fields_valid.avatar %}
+			<div class="account-avatar-error">
+				<span>Failed to upload new Avatar, try again</span>
+			</div>
+			{% endif %}
 			<form method="post" enctype="multipart/form-data">
 				{% csrf_token %}
 				<input type="file" class="form-control choose-avatar-button" name="avatar" accept=".jpg, .png .bmp">
@@ -38,25 +42,25 @@
 					<div class="row mb-4">
 						<label for="inputFName" class="col-sm-2 col-form-label">First Name</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control {{ is_fields_valid.first_name|safe }}" id="inputFName" value="{{ user_form.first_name|safe }}" name="first_name">
+							<input type="text" class="form-control {{ is_fields_invalid.first_name|safe }}" id="inputFName" value="{{ user_form.first_name|safe }}" name="first_name">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputLName" class="col-sm-2 col-form-label">Last Name</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control {{ is_fields_valid.last_name|safe }}" id="inputLName" value="{{ user_form.last_name|safe  }}" name="last_name">
+							<input type="text" class="form-control {{ is_fields_invalid.last_name|safe }}" id="inputLName" value="{{ user_form.last_name|safe  }}" name="last_name">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control {{ is_fields_valid.username|safe }}" id="inputUsername" value="{{ user_form.username|safe  }}" name="username">
+							<input type="text" class="form-control {{ is_fields_invalid.username|safe }}" id="inputUsername" value="{{ user_form.username|safe  }}" name="username">
 						</div>
 					</div>
 					<div class="row mb-4">
 						<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
 						<div class="col-sm-5">
-							<input type="text" class="form-control {{ is_fields_valid.email|safe }}" id="inputEmail" value="{{ user_form.email|safe  }}" name="email">
+							<input type="text" class="form-control {{ is_fields_invalid.email|safe }}" id="inputEmail" value="{{ user_form.email|safe  }}" name="email">
 						</div>
 					</div>
 					<div class="row">
@@ -64,7 +68,7 @@
 							<label for="inputPassword" class="col-form-label">Password</label>
 						</div>
 						<div class="col-auto">
-							<input type="text" class="form-control {{ is_fields_valid.password|safe }}" id="inputPassword">
+							<input type="text" class="form-control {{ is_fields_invalid.password|safe }}" id="inputPassword">
 							<!-- name="password" -->
 						</div>
 						<div class="col-auto">

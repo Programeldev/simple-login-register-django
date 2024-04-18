@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from .models import UserAvatarModel
-from .utils.validators import name_validators, password_validators, \
-                            username_validators, email_validators
+from .validators import name_validators, password_validators, \
+                        username_validators, email_validators
 
 
 class LoginForm(forms.Form):
@@ -33,6 +33,7 @@ class LoginForm(forms.Form):
 
         self.fields['password'] = forms.CharField(widget=forms.PasswordInput,
                                                   validators=password_validators)
+        # self.fields['password'] = forms.CharField(widget=forms.PasswordInput)
 
         if settings.REMEMBER_ME:
             self.fields['remember_me'] = forms.BooleanField(required=False)
