@@ -87,8 +87,14 @@ class AccountView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         try:
             self.user_avatar = UserAvatarModel.objects.get(user=request.user)
-            self.avatar_name = self.user_avatar.avatar.name
+
+            if self.user_avatar.avatar.size:
+                self.avatar_name = self.user_avatar.avatar.name
         except models.ObjectDoesNotExist:
+            self.user_avatar = None
+            self.avatar_name = None
+        except FileNotFoundError:
+            log.info('filenotfound')
             self.avatar_name = None
 
         return super().dispatch(request, *args, **kwargs)
@@ -107,19 +113,17 @@ class AccountView(LoginRequiredMixin, View):
             user_avatar_form = UserAvatarModelForm(request.POST, request.FILES)
 
             if user_avatar_form.is_valid():
-                if self.avatar_name:
-                    # Delete old avatar from BASE_DIR/media/
-                    Path(self.user_avatar.avatar.path).unlink(missing_ok=True)
+                if not self.user_avatar:
+                    self.user_avatar = \
+                        UserAvatarModel.objects.create(user=request.user,
+                            avatar=user_avatar_form.cleaned_data['avatar'])
+                else:
+                    if self.avatar_name:
+                        Path(self.user_avatar.avatar.path).unlink(missing_ok=True)
 
-                    # Updating avatar to new
                     self.user_avatar.avatar = \
                         user_avatar_form.cleaned_data['avatar']
                     self.user_avatar.save()
-                    self.avatar_name = self.user_avatar.avatar.name
-                else:
-                    self.user_avatar = \
-                        UserAvatarModel.objects.create(user=request.user,
-                                avatar=user_avatar_form.cleaned_data['avatar'])
                     self.avatar_name = self.user_avatar.avatar.name
             else:
                 is_fields_invalid = {'avatar': True}
