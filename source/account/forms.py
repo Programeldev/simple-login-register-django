@@ -47,6 +47,20 @@ class UserForm(forms.Form):
     # password = forms.CharField(widget=forms.PasswordInput,
     #                            validators=password_validators,
     #                            required=False)
+    # password2 = forms.CharField(widget=forms.PasswordInput,
+    #                             validators=password_validators,
+    #                             required=False)
+    password = forms.CharField(required=False)
+    password2 = forms.CharField(required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+
+        if not password == password2:
+            self.add_error('password',
+                           'Passed passwords is different !')
 
 
 class UserAvatarModelForm(forms.ModelForm):

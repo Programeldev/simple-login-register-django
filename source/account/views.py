@@ -133,10 +133,11 @@ class AccountView(LoginRequiredMixin, View):
 
             if user_form.is_valid():
                 log.info(user_form.cleaned_data)
-                User.objects.filter(id=request.user.id) \
-                            .update(**user_form.cleaned_data)
 
+                # User.objects.filter(id=request.user.id) \
+                #             .update(**user_form.cleaned_data)
             else:
+                log.info(user_form.cleaned_data)
                 validation_errors = gen_html_validation_errors(
                                         user_form.errors.get_json_data())
                 is_fields_invalid = \
