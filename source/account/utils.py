@@ -1,7 +1,19 @@
 from io import StringIO
+from pathlib import Path
 
 
 def avatar_path(instance, filename):
+    avatar_name = '{}_avatar_{}'.format(instance.user.id, filename)
+    path = Path(
+        '/'.join((
+            str(Path(instance.avatar.path).parent),
+            avatar_name
+        ))
+    )
+
+    if path.exists():
+        path.unlink()
+
     return '{}_avatar_{}'.format(instance.user.id, filename)
 
 
