@@ -55,7 +55,7 @@ class UserForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-        password = cleaned_data.get('password1')
+        password = cleaned_data.get('password')
         password2 = cleaned_data.get('password2')
 
         if not password == password2:
