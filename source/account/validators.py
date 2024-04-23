@@ -39,7 +39,7 @@ def password_regex_validator(password):
     ]
 
     for r in regex:
-        if r.findall(password) is None:
+        if not r.findall(password):
             raise ValidationError(_('Invalid password. Must have digit, '
                                 'one uppercase letter and special character.'),
                                 code='invalid password')
