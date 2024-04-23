@@ -23,14 +23,12 @@ class LoginForm(forms.Form):
         if not settings.USE_USERNAME and not settings.USE_EMAIL:
             self.fields['username'] = forms.CharField(validators=username_validators)
 
-            logging.getLogger(__name__).info('At least one of username or '
-                                             'email field must be select. '
-                                             'Selected username field for '
-                                             'default.')
+            logging.getLogger(__name__).info(
+                'At least one of username or email field must be select.'
+                ' Selected username field for default.')
 
         self.fields['password'] = forms.CharField(widget=forms.PasswordInput,
                                                   validators=password_validators)
-        # self.fields['password'] = forms.CharField(widget=forms.PasswordInput)
 
         if settings.REMEMBER_ME:
             self.fields['remember_me'] = forms.BooleanField(required=False)
@@ -41,9 +39,21 @@ class UserForm(forms.Form):
     last_name = forms.CharField(validators=name_validators, required=False)
     username = forms.CharField(validators=username_validators, required=False)
     email = forms.EmailField(validators=email_validators, required=False)
-    # password = forms.CharField(widget=forms.PasswordInput,
-    #                            validators=password_validators,
-    #                            required=False)
+    password = forms.CharField(widget=forms.PasswordInput,
+                               validators=password_validators,
+                               required=False)
+    password2 = forms.CharField(widget=forms.PasswordInput,
+                                validators=password_validators,
+                                required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if not password == password2:
+            self.add_error('password',
+                           'Passed passwords is different !')
 
 
 class UserAvatarModelForm(forms.ModelForm):

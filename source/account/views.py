@@ -122,15 +122,22 @@ class AccountView(LoginOnlyView, View):
             user_form = UserForm(request.POST)
 
             if user_form.is_valid():
-                log.info(user_form.cleaned_data)
-                User.objects.filter(id=request.user.id) \
-                            .update(**user_form.cleaned_data)
+                new_password = user_form.cleaned_data.pop('password')
+                user_form.cleaned_data.pop('password2')
 
+                User.objects.filter(id=request.user.id) \
+                        .update(**user_form.cleaned_data)
+
+                user = User.objects.get(pk=request.user.id)
+                user.set_password(new_password)
+                user.save()
             else:
+                log.info(user_form.cleaned_data)
+
                 validation_errors = gen_html_validation_errors(
                                         user_form.errors.get_json_data())
                 is_fields_invalid = \
-                        dict.fromkeys(user_form.cleaned_data.keys(), '')
+                    dict.fromkeys(user_form.cleaned_data.keys(), '')
                 invalid_fields = user_form.errors.as_data().keys()
 
                 for field in invalid_fields:

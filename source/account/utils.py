@@ -28,6 +28,9 @@ def gen_html_validation_errors(invalid_fields):
                    f'{tab}\t<table>\n')
 
     for field in invalid_fields.keys():
+        if field == 'password2':
+            continue
+
         gen_html.write(f'{tab}\t\t<tr>\n'
                        f'{2*tab}<th class="invalid-field">'
                        f'<span>{field}: </span></th>\n'

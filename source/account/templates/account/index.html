@@ -68,11 +68,10 @@
 							<label for="inputPassword" class="col-form-label">Password</label>
 						</div>
 						<div class="col-auto">
-							<input type="password" class="form-control {{ is_fields_invalid.password|safe }}" id="inputPassword">
-							<!-- name="password" -->
+							<input type="password" class="form-control {{ is_fields_invalid.password|safe }}" id="inputPassword" name="password">
 						</div>
 						<div class="col-auto">
-							<input type="password" class="form-control">
+							<input type="password" class="form-control {{ is_fields_invalid.password|safe }}" name="password2">
 						</div>
 						<div class="col-auto">
 							<label class="col-form-label password-sublabel">Must be above 8 characters</label>
