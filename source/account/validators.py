@@ -1,5 +1,4 @@
 import re
-from django.utils.translation import gettext_lazy as _
 
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MaxLengthValidator, \
@@ -40,9 +39,9 @@ def password_regex_validator(password):
 
     for r in regex:
         if r.findall(password) is None:
-            raise ValidationError(_('Invalid password. Must have digit, '
-                                'one uppercase letter and special character.'),
-                                code='invalid password')
+            raise ValidationError(
+                'Invalid password. Must have digit, one uppercase letter '
+                'and special character.')
 
 
 password_validators = [

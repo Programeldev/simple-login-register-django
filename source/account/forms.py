@@ -1,10 +1,7 @@
 import logging
 
 from django import forms
-from django.core.validators import MaxLengthValidator, EmailValidator
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from .models import UserAvatarModel
 from .validators import name_validators, password_validators, \

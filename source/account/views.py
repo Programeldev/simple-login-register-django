@@ -5,9 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.utils.translation import gettext as _
 from django.views import View
 
 from .forms import LoginForm, UserForm, UserAvatarModelForm
@@ -18,11 +16,20 @@ from .utils import gen_html_validation_errors
 log = logging.getLogger(__name__)
 
 
-# Check if is not logged user
+# Check if user is not logged
 class GuestOnlyView(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('account:index')
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+# check if user is logged
+class LoginOnlyView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('account:login')
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -36,7 +43,6 @@ class LoginView(GuestOnlyView, View):
             request.session.set_test_cookie()
 
         form = self.form_class()
-        log.info(self.template_name)
         return render(request, self.template_name, {'login_form': form})
 
     def post(self, request, *args, **kwargs):
@@ -56,7 +62,8 @@ class LoginView(GuestOnlyView, View):
                     # pop 'remember_me' because cant be passed in authenticate()
                     login_form.cleaned_data.pop('remember_me')
                 else:
-                    log.error('Cookies don\'t work in this browser.')
+                    logging.getLogger(__name__).error(
+                        'Cookies don\'t work in this browser.')
 
             user = authenticate(**login_form.cleaned_data)
 
@@ -77,33 +84,16 @@ class LoginView(GuestOnlyView, View):
                    'validation_failed': validation_failed})
 
 
-class AccountView(LoginRequiredMixin, View):
+class AccountView(LoginOnlyView, View):
     template_name = 'account/index.html'
-    login_url = 'account/login'
-    redirect_field_name = 'account/'
-    user_avatar: UserAvatarModel
-    avatar_name: str
-
-    def dispatch(self, request, *args, **kwargs):
-        try:
-            self.user_avatar = UserAvatarModel.objects.get(user=request.user)
-
-            if self.user_avatar.avatar.size:
-                self.avatar_name = self.user_avatar.avatar.name
-        except models.ObjectDoesNotExist:
-            self.user_avatar = None
-            self.avatar_name = None
-        except FileNotFoundError:
-            log.info('filenotfound')
-            self.avatar_name = None
-
-        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         user_form = request.user
+        avatar_name = UserAvatarModel.objects.get(user=request.user).avatar.name
+
         return render(request, self.template_name,
                       {'user_form': user_form,
-                       'avatar_name': self.avatar_name})
+                       'avatar_name': avatar_name})
 
     def post(self, request, *args, **kwargs):
         is_fields_invalid: dict = None
@@ -113,18 +103,18 @@ class AccountView(LoginRequiredMixin, View):
             user_avatar_form = UserAvatarModelForm(request.POST, request.FILES)
 
             if user_avatar_form.is_valid():
-                if not self.user_avatar:
-                    self.user_avatar = \
-                        UserAvatarModel.objects.create(user=request.user,
-                            avatar=user_avatar_form.cleaned_data['avatar'])
-                else:
-                    if self.avatar_name:
+                try:
+                    user_avatar = UserAvatarModel.objects.get(user=request.user)
+                except models.ObjectDoesNotExist:
+                    user_avatar = \
+                        UserAvatarModel.objects.create(user=request.user)
+
+                    if user_avatar.avatar:
                         Path(self.user_avatar.avatar.path).unlink(missing_ok=True)
 
-                    self.user_avatar.avatar = \
+                    user_avatar.avatar = \
                         user_avatar_form.cleaned_data['avatar']
-                    self.user_avatar.save()
-                    self.avatar_name = self.user_avatar.avatar.name
+                    user_avatar.save()
             else:
                 is_fields_invalid = {'avatar': True}
 
@@ -146,13 +136,15 @@ class AccountView(LoginRequiredMixin, View):
                 for field in invalid_fields:
                     is_fields_invalid[field] = 'is-invalid'
 
-        user_form = User.objects.get(id=request.user.id)
+        user = User.objects.get(id=request.user.id)
+        user_form = user
+        avatar_name = UserAvatarModel.objects.get(user=user).avatar.name
 
         return render(request, self.template_name,
                       {'user_form': user_form,
-                       'avatar_name': self.avatar_name,
+                       'avatar_name': avatar_name,
                        'is_fields_invalid': is_fields_invalid,
-                       'validation_errors': validation_errors,})
+                       'validation_errors': validation_errors})
 
 
 def logout_view(request):
