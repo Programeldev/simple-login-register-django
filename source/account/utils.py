@@ -1,20 +1,26 @@
 from io import StringIO
-from pathlib import Path
+
+from django.db import models
+from django.contrib.auth.models import User
+
+from .models import UserAvatarModel
 
 
-def avatar_path(instance, filename):
-    avatar_name = '{}_avatar_{}'.format(instance.user.id, filename)
-    path = Path(
-        '/'.join((
-            str(Path(instance.avatar.path).parent),
-            avatar_name
-        ))
-    )
+def get_avatar_name(user):
+    if not isinstance(user, User):
+        raise TypeError('This is not User instance.')
 
-    if path.exists():
-        path.unlink()
+    try:
+        avatar = UserAvatarModel.objects.get(user=user).avatar
 
-    return '{}_avatar_{}'.format(instance.user.id, filename)
+        if avatar.size:
+            return avatar.name
+        else:
+            return None
+    except models.ObjectDoesNotExist:
+        return None
+    except FileNotFoundError:
+        return None
 
 
 def gen_html_validation_errors(invalid_fields):
