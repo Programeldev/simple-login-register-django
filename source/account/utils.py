@@ -8,7 +8,7 @@ from .models import UserAvatarModel
 
 def get_avatar_name(user):
     if not isinstance(user, User):
-        raise TypeError('This is not User instance.')
+        raise TypeError('user is not User object.')
 
     try:
         avatar = UserAvatarModel.objects.get(user=user).avatar
@@ -23,12 +23,16 @@ def get_avatar_name(user):
         return None
 
 
-def gen_html_validation_errors(invalid_fields):
+def gen_html_validation_errors(invalid_fields, tab=0):
     if not isinstance(invalid_fields, dict):
-        raise TypeError('"invalid_fields" is not dict instance.')
+        raise TypeError('invalid_fields is not dict.')
         return None
 
-    tab = 3 * '\t'
+    if tab:
+        tab = tab * '\t'
+    else:
+        tab = ''
+
     gen_html = StringIO()
     gen_html.write(f'{tab}<div class="overflow-auto errors-textbox">\n'
                    f'{tab}\t<table>\n')

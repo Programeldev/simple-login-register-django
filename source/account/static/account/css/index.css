@@ -23,15 +23,9 @@ body
 
 .account-avatar
 {
-	/* background: gray; */
 	grid-area: avatar;
 	padding-top: 30%;
 	text-align: center;
-	/* top: 10%; */
-	/* left: 5%; */
-	/* transform: translate(-50%, -50%); */
-	/* width: 40%; */
-	/* height: 90%; */
 }
 
 .account-data
@@ -44,8 +38,6 @@ body
 	text-align: center;
 	font-size: 130%;
 	border-radius: 140px;
-	/* width: 50%; */
-	/* height: 65%; */
 }
 
 .options-menu

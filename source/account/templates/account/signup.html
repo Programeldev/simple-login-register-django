@@ -8,5 +8,30 @@
 
 {% block content %}
 	<div class="main" data-bs-theme="dark">
-
+		<form method="post">
+			{% csrf_token %}
+			{% if form.username %}
+			<div class="form-floating mb-4">
+				<input type="text" class="form-control {{ invalid_fields.username|safe }}" name="username" id="username" placeholder=" ">
+				<label for="username">Username</label>
+			</div>
+			{% endif %}
+			{% if form.email %}
+			<div class="form-floating mb-4">
+				<input type="text" class="form-control {{ invalid_fields.email|safe }}" name="email" id="email" placeholder=" ">
+				<label for="email">Email</label>
+			</div>
+			{% endif %}
+			<div class="form-floating mb-4">
+				<input type="password" class="form-control {{ invalid_fields.password|safe }}" name="password" id="password" placeholder=" ">
+				<label for="password">Password</label>
+			</div>
+			<div class="form-floating mb-4">
+				<input type="password" class="form-control {{ invalid_fields.password|safe }}" name="password2" id="password2" placeholder=" ">
+				<label for="password2">Repeat Password</label>
+			</div>
+{{ validation_errors|safe }}
+			<input type="submit" class="btn btn-primary btn-lg signup-button" value="Sign up">
+		</form>
+	</div>
 {% endblock %}

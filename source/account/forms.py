@@ -2,15 +2,17 @@ import logging
 
 from django import forms
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from .models import UserAvatarModel
 from .validators import name_validators, password_validators, \
                         username_validators, email_validators
 
+log = logging.getLogger(__name__)
 
-class LoginForm(forms.Form):
+class BaseForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        super(LoginForm, self).__init__(*args, **kwargs)
+        super(BaseForm, self).__init__(*args, **kwargs)
 
         if settings.USE_USERNAME:
             self.fields['username'] = forms.CharField(validators=username_validators)
@@ -30,8 +32,63 @@ class LoginForm(forms.Form):
         self.fields['password'] = forms.CharField(widget=forms.PasswordInput,
                                                   validators=password_validators)
 
+
+class LoginForm(BaseForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
         if settings.REMEMBER_ME:
             self.fields['remember_me'] = forms.BooleanField(required=False)
+
+
+class SignUpForm(BaseForm):
+    password2 = forms.CharField(widget=forms.PasswordInput,
+                                validators=password_validators)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        users = User.objects.all()
+
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if not password == password2:
+            self.add_error('password',
+                           'Passed passwords is different !')
+
+        try:
+            username = cleaned_data['username']
+
+            if users.filter(username=username).exists():
+                self.add_error('username',
+                               'This username is used by someone.')
+        except KeyError:
+            pass
+
+        try:
+            email = cleaned_data['email']
+
+            if users.filter(email=email).exists():
+                self.add_error('email',
+                               'This email is used by someone.')
+        except KeyError:
+            pass
+        #
+        # if hasattr(self, 'username'):
+        #     log.info('filed username')
+        #     username = cleaned_data['username']
+        #
+        #     if users.filter(username=username).exists():
+        #         self.add_error('username',
+        #                        'This username is used by someone.')
+        #
+        # if hasattr(self, 'email'):
+        #     log.info('filed email')
+        #     email = cleaned_data['email']
+        #
+        #     if users.filter(email=email).exists():
+        #         self.add_error('username',
+        #                        'This email is used by someone.')
 
 
 class UserForm(forms.Form):

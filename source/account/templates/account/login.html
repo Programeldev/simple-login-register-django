@@ -20,32 +20,30 @@
 		{% endif %}
 		<form method="post">
 			{% csrf_token %}
-			{% if login_form.username %}
+			{% if form.username %}
 			<div class="form-floating mb-4">
-				<input type="text" class="form-control {{ validation_failed|safe }}" name="username" id="username" placeholder=" ">
+				<input type="text" class="form-control {{ validation_failed|safe }}" name="username" id="username" value="{{ usern }}" placeholder=" ">
 				<label for="username">Username</label>
 			</div>
 			{% endif %}
-			{% if login_form.email %}
+			{% if form.email %}
 			<div class="form-floating mb-4">
 				<input type="email" class="form-control {{ validation_failed|safe }}" name="email" id="email" placeholder=" ">
 				<label for="email">Email</label>
 			</div>
 			{% endif %}
-			{% if login_form.password %}
 			<div class="form-floating mb-4">
 				<input type="password" class="form-control mb-3 {{ validation_failed|safe }}" name="password" id="password" placeholder=" ">
 				<label for="password">Password</label>
 			</div>
-			{% endif %}
-			{% if login_form.remember_me %}
-			<div class="form-check mb-4 remember_me_checkbox">
-				<input type="checkbox" class="form-check-input" name="remember_me" id="remember_me">
-				<label for="remember_me" class="form-check-label">Remember me</label>
+			{% if form.remember_me %}
+			<div class="form-check mb-4 remember-me-checkbox">
+				<input type="checkbox" class="form-check-input" name="remember_me" id="remember-me">
+				<label for="remember-me" class="form-check-label">Remember me</label>
 			</div>
 			{% endif %}
 			<input type="submit" class="btn btn-light btn-lg" value="Sign in">
 		</form>
-		<button type="button" onclick="redirect_signup()" class="btn btn-primary btn-sm mb-4 create_account_button">Sign up</button>
+		<button type="button" onclick="redirect_signup()" class="btn btn-primary btn-sm mb-4 signup-button">Sign up</button>
 	</div>
 {% endblock %}

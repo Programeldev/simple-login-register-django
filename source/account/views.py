@@ -4,13 +4,14 @@ from pathlib import Path
 from django.conf import settings
 from django.db import models
 from django.views import View
+# from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-from .forms import LoginForm, UserForm, UserAvatarModelForm
+from .forms import LoginForm, UserForm, UserAvatarModelForm, SignUpForm
 from .models import UserAvatarModel
 from .utils import gen_html_validation_errors, get_avatar_name
 
@@ -46,29 +47,29 @@ class LoginView(GuestOnlyView, View):
             request.session.set_test_cookie()
 
         form = self.form_class()
-        return render(request, self.template_name, {'login_form': form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        login_form = LoginForm(request.POST)
+        form = self.form_class(request.POST)
         validation_failed = ''
 
-        if login_form.is_valid():
-            if 'remember_me' in login_form.cleaned_data:
+        if form.is_valid():
+            if 'remember_me' in form.cleaned_data:
                 if request.session.test_cookie_worked():
                     request.session.delete_test_cookie()
 
-                    if login_form.cleaned_data['remember_me']:
+                    if form.cleaned_data['remember_me']:
                         request.session.set_expiry(settings.REMEMBER_ME_EXPIRY)
                     else:
                         request.session.set_expiry(0)
 
                     # pop 'remember_me' because cant be passed in authenticate()
-                    login_form.cleaned_data.pop('remember_me')
+                    form.cleaned_data.pop('remember_me')
                 else:
                     logging.getLogger(__name__).error(
                         'Cookies don\'t work in this browser.')
 
-            user = authenticate(**login_form.cleaned_data)
+            user = authenticate(**form.cleaned_data)
 
             if user is not None:
                 log.info('auth ok')
@@ -79,12 +80,12 @@ class LoginView(GuestOnlyView, View):
                 validation_failed = 'is-invalid'
         else:
             log.error('validation failed')
-            log.error(login_form.errors.as_data())
+            log.error(form.errors.as_data())
             validation_failed = 'is-invalid'
 
         return render(request, self.template_name,
-                  {'login_form': login_form,
-                   'validation_failed': validation_failed})
+                      {'form': form,
+                       'validation_failed': validation_failed})
 
 
 class AccountView(UserOnlyView, View):
@@ -121,7 +122,9 @@ class AccountView(UserOnlyView, View):
                     user_avatar_form.cleaned_data['avatar']
                 user_avatar.save()
             else:
-                is_fields_invalid = {'avatar': True}
+                invalid_fields = {'avatar': 'is-invalid'}
+                validation_errors = gen_html_validation_errors(
+                                        user_avatar_form.errors.get_json_data())
 
         elif 'update-account-submit' in request.POST:
             user_form = UserForm(request.POST)
@@ -149,12 +152,8 @@ class AccountView(UserOnlyView, View):
 
                 validation_errors = gen_html_validation_errors(
                                         user_form.errors.get_json_data())
-                is_fields_invalid = \
-                    dict.fromkeys(user_form.cleaned_data.keys(), '')
-                invalid_fields = user_form.errors.as_data().keys()
-
-                for field in invalid_fields:
-                    is_fields_invalid[field] = 'is-invalid'
+                invalid_fields = dict.fromkeys(user_form.errors.as_data().keys(),
+                                               'is-invalid')
 
         user = User.objects.get(id=request.user.id)
         user_form = user
@@ -163,14 +162,37 @@ class AccountView(UserOnlyView, View):
         return render(request, self.template_name,
                       {'user_form': user_form,
                        'avatar_name': avatar_name,
-                       'is_fields_invalid': is_fields_invalid,
+                       'invalid_fields': invalid_fields,
                        'validation_errors': validation_errors})
 
 
 class SignUpView(GuestOnlyView, View):
-    template_name = 'account:signup'
+    form_class = SignUpForm
+    template_name = 'account/signup.html'
 
-    
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        invalid_fields: dict = None
+        validation_errors = ''
+
+        if form.is_valid():
+            log.info(form.cleaned_data)
+            # new_user = User.objects.create()
+        else:
+            validation_errors = gen_html_validation_errors(
+                                        form.errors.get_json_data())
+            invalid_fields = dict.fromkeys(form.errors.as_data().keys(),
+                                           'is-invalid')
+
+        return render(request, self.template_name,
+                      {'form': form,
+                       'invalid_fields': invalid_fields,
+                       'validation_errors': validation_errors})
+
 
 def logout_view(request):
     logout(request)
