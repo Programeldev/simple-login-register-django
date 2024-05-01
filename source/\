@@ -25,9 +25,7 @@ body
 {
 	grid-area: avatar;
 	margin-top: 25%;
-	margin-right: 40px;
-	margin-left: 40px;
-	text-align: left;
+	text-align: center;
 }
 
 .account-data
@@ -87,8 +85,9 @@ body
 .choose-avatar-button
 {
 	font-size: 16px;
-	width: 320px;
+	width: 330px;
 	height: 38px;
+	margin-left: 80px;
 	margin-top: 50px;
 }
 
@@ -98,7 +97,6 @@ body
 	width: 220px;
 	height: 60px;
 	margin-top: 50px;
-	margin-left: 20px;
 }
 
 .account-avatar-error
@@ -116,11 +114,6 @@ body
 	font-size: 18px;
 	font-style: italic;
 	color: #cacaca;
-}
-
-.password-input
-{
-	width: 180px;
 }
 
 .errors-textbox

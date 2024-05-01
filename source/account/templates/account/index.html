@@ -63,10 +63,10 @@
 							<label for="inputPassword" class="col-form-label">Password</label>
 						</div>
 						<div class="col-auto">
-							<input type="password" class="form-control {{ invalid_fields.password|safe }}" id="inputPassword" name="password">
+							<input type="password" class="form-control password-input {{ invalid_fields.password|safe }}" id="inputPassword" name="password">
 						</div>
 						<div class="col-auto">
-							<input type="password" class="form-control {{ is_fields_invalid.password|safe }}" name="password2">
+							<input type="password" class="form-control password-input {{ is_fields_invalid.password|safe }}" name="password2">
 						</div>
 						<div class="col-auto">
 							<label class="col-form-label password-sublabel">Must be above 8 characters</label>
@@ -82,7 +82,10 @@
 					<button type="submit" class="btn btn-success save-changes-button" form="account-data-form" name="update-account-submit">Save changes</button>
 				</div>
 				<div class="col">
-					<button type="button" class="btn btn-info logout-button" onclick="logout()">Logout</button>
+					<button type="button" class="btn btn-danger delete-account-button" onclick="redirect_delete()">Delete account</button>
+				</div>
+				<div class="col">
+					<button type="button" class="btn btn-info logout-button" onclick="redirect_logout()">Logout</button>
 				</div>
 			</div>
 		</div>

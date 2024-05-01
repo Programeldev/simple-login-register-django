@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block css %} 
+	<link rel="stylesheet" href="{% static 'account/css/delete.css' %}">
+{% endblock %}
+{% block title %} Deleting... {% endblock %}
+
+{% block script %}
+	<script>
+		function redirect_delete()
+		{
+			location.replace("http://localhost:8000/account/delete?yousure=yes")
+		}
+	</script>
+{% endblock %}
+
+{% block content %}
+<div class="main" data-bs-theme="dark">
+	{{ if delete }}
+	
+	{{ endif }}
+</div>
+{% endblock %}

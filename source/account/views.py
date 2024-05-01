@@ -7,6 +7,7 @@ from django.views import View
 # from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
+from django.utils.datastructures import MultiValueDictKeyError
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -196,6 +197,14 @@ class SignUpView(GuestOnlyView, View):
                       {'form': form,
                        'invalid_fields': invalid_fields,
                        'validation_errors': validation_errors})
+
+
+def delete_view(request):
+    try:
+        if request.GET['yousure'] == 'yes':
+            return render(request, 'account/delete.html', {'delete': True})
+    except MultiValueDictKeyError:
+        return render(request, 'account/delete.html')
 
 
 def logout_view(request):
