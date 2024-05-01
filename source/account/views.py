@@ -100,7 +100,7 @@ class AccountView(UserOnlyView, View):
                        'avatar_name': avatar_name})
 
     def post(self, request, *args, **kwargs):
-        is_fields_invalid: dict = None
+        invalid_fields: dict = None
         validation_errors = ''
 
         if 'change-avatar-submit' in request.POST:
@@ -180,8 +180,12 @@ class SignUpView(GuestOnlyView, View):
         validation_errors = ''
 
         if form.is_valid():
-            log.info(form.cleaned_data)
-            # new_user = User.objects.create()
+            form.cleaned_data.pop('password2')
+            new_user = User.objects.create(**form.cleaned_data)
+            login(request, new_user)
+
+            return render(request, 'account/welcome.html',
+                          {'username': new_user.username})
         else:
             validation_errors = gen_html_validation_errors(
                                         form.errors.get_json_data())

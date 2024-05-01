@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block css %} 
+	<link rel="stylesheet" href="{% static 'account/css/welcome.css' %}">
+{% endblock %}
+{% block title %} Welcome ! {% endblock %}
+
+{% block script %}
+<script>
+	function redirect_account()
+	{
+		location.replace("http://localhost:8000/account")
+	}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="main" data-bs-theme="dark">
+	<p class="welcome-label">Welcome {{ username }} !</p>
+	<p class="sublabel">You successfuly created new account!</p>
+	<button type="button" onclick="redirect_account()" class="btn btn-primary btn-lg mb-4 button">Go to Account page</button>
+</div>
+{% endblock %}
