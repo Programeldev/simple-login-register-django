@@ -199,12 +199,24 @@ class SignUpView(GuestOnlyView, View):
                        'validation_errors': validation_errors})
 
 
-def delete_view(request):
-    try:
-        if request.GET['yousure'] == 'yes':
-            return render(request, 'account/delete.html', {'delete': True})
-    except MultiValueDictKeyError:
-        return render(request, 'account/delete.html')
+@method_decorator(never_cache, name='dispatch')
+class DeleteView(UserOnlyView, View):
+    template_name = 'account/delete.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'delete': False})
+
+    def post(self, request, *args, **kwargs):
+        delete = False
+
+        if 'delete-submit' in request.POST:
+            user = request.user
+            delete = True
+
+            logout(request)
+            user.delete()
+
+        return render(request, self.template_name, {'delete': delete})
 
 
 def logout_view(request):

@@ -34,8 +34,7 @@ body
 table, tr, th
 {
 	padding-left: 8px;
-    vertical-align: top;
-	
+	vertical-align: top;
 }
 
 .invalid-field
@@ -46,4 +45,16 @@ table, tr, th
 .signup-button
 {
 	margin-top: 30px;
+}
+
+.signin-label
+{
+	font-size: 18px;
+	margin-top: 30px;
+}
+
+.signin-link
+{
+	font-size: 18px;
+	color: #0057d1; 
 }

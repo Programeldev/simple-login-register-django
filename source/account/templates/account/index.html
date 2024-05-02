@@ -8,9 +8,14 @@
 
 {% block script %}
 	<script>
-		function logout()
+		function redirect_logout()
 		{
 			location.replace("http://localhost:8000/account/logout")
+		}
+
+		function redirect_delete()
+		{
+			location.replace("http://localhost:8000/account/delete")
 		}
 	</script>
 {% endblock %}

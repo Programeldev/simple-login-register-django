@@ -33,5 +33,6 @@
 {{ validation_errors|safe }}
 			<input type="submit" class="btn btn-primary btn-lg signup-button" value="Sign up">
 		</form>
+		<label class="signin-label"> Have you account ? <a href="{% url 'account:login' %}" class="signin-link"> Sign in </a> </label>
 	</div>
 {% endblock %}
