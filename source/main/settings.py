@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 ##########################
 #   account app config   #
 ##########################
@@ -8,7 +10,7 @@ USE_USERNAME = True
 
 # remember logged users
 REMEMBER_ME = True
-REMEMBER_ME_EXPIRY = (60 * 60 * 24) * 7
+REMEMBER_ME_EXPIRY = int(timedelta(days=7).total_seconds())
 
 
 #####################################
