@@ -7,7 +7,10 @@ from django.core.validators import RegexValidator, MaxLengthValidator, \
 
 # find any decimal digit and characters oder than alphabetic
 name_validators = [
-    RegexValidator(r'[^a-zA-z_]',
+    # RegexValidator(r'[^a-zA-z_]',
+    #                message='Only alphabetic letters are allowed.',
+    #                inverse_match=True),
+    RegexValidator(r'[\W\d]',
                    message='Only alphabetic letters are allowed.',
                    inverse_match=True),
     MaxLengthValidator(150, 'Name is too long (max 150).')
