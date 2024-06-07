@@ -11,7 +11,7 @@ body
 	grid-template-areas:
 		'avatar avatar avatar data    data'
 		'avatar avatar avatar data    data'
-		'avatar avatar avatar options options';
+		'avatar avatar avatar empty   options';
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -45,6 +45,7 @@ body
 .options-menu
 {
 	margin-top: 7%;
+	margin-right: 50px;
 	grid-area: options;
 	text-align: center;
 }
@@ -55,25 +56,11 @@ body
 	font-style: italic;
 }
 
-.save-changes-button
+.option-button
 {
-	font-size: 25px;
-	width: 220px;
-	height: 70px;
-}
-
-.delete-account-button
-{
-	font-size: 25px;
-	width: 220px;
-	height: 70px;
-}
-
-.logout-button
-{
-	font-size: 25px;
-	width: 220px;
-	height: 70px;
+	font-size: 20px;
+	width: 170px;
+	height: 50px;
 }
 
 .account-avatar-image
@@ -94,11 +81,11 @@ body
 
 .change-avatar-button
 {
-	font-size: 22px;
-	width: 220px;
-	height: 60px;
+	font-size: 20px;
+	width: 180px;
+	height: 50px;
 	margin-top: 50px;
-	margin-left: 20px;
+	margin-left: 50px;
 }
 
 .account-avatar-error
