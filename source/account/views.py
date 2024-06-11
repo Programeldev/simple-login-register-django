@@ -17,9 +17,6 @@ from .models import UserAvatarModel
 from .utils import gen_html_validation_errors, get_avatar_name
 
 
-log = logging.getLogger(__name__)
-
-
 # Check if user is not logged
 class GuestOnlyView(View):
     def dispatch(self, request, *args, **kwargs):
@@ -73,15 +70,11 @@ class LoginView(GuestOnlyView, View):
             user = authenticate(**form.cleaned_data)
 
             if user is not None:
-                log.info('auth ok')
                 login(request, user)
                 return redirect('account:index')
             else:
-                log.info('auth failed')
                 validation_failed = 'is-invalid'
         else:
-            log.error('validation failed')
-            log.error(form.errors.as_data())
             validation_failed = 'is-invalid'
 
         return render(request, self.template_name,
@@ -149,8 +142,6 @@ class AccountView(UserOnlyView, View):
                     )
                     login(request, user)
             else:
-                log.info(user_form.cleaned_data)
-
                 validation_errors = gen_html_validation_errors(
                                         user_form.errors.get_json_data())
                 invalid_fields = dict.fromkeys(user_form.errors.as_data().keys(),
@@ -211,12 +202,12 @@ class DeleteView(UserOnlyView, View):
 
         if 'delete-submit' in request.POST:
             user = request.user
-            delete = True
+            deleted = True
 
             logout(request)
             user.delete()
 
-        return render(request, self.template_name, {'delete': delete})
+        return render(request, self.template_name, {'deleted': deleted})
 
 
 def logout_view(request):

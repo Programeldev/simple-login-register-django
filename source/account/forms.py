@@ -8,7 +8,6 @@ from .models import UserAvatarModel
 from .validators import name_validators, password_validators, \
                         username_validators, email_validators
 
-log = logging.getLogger(__name__)
 
 class BaseForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -73,22 +72,6 @@ class SignUpForm(BaseForm):
                                'This email is used by someone.')
         except KeyError:
             pass
-        #
-        # if hasattr(self, 'username'):
-        #     log.info('filed username')
-        #     username = cleaned_data['username']
-        #
-        #     if users.filter(username=username).exists():
-        #         self.add_error('username',
-        #                        'This username is used by someone.')
-        #
-        # if hasattr(self, 'email'):
-        #     log.info('filed email')
-        #     email = cleaned_data['email']
-        #
-        #     if users.filter(email=email).exists():
-        #         self.add_error('username',
-        #                        'This email is used by someone.')
 
 
 class UserForm(forms.Form):
