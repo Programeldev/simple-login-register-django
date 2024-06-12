@@ -1,7 +1,8 @@
 # Simple Login Register Django
 Simple website for creating and managing user account written in pure Django Framework (Python). You can create a new account, login, logout, delete account, set or change avatar image and change user data (first name, username etc.). Authentication is session-based. I created this project focusing on the backend.
 
-|<img src="img/scr1.png" width="200">|<img src="img/scr2.png" width="200">|
+<img src="img/scr1.png" heigth="200">
+<img src="img/scr2.png" heigth="200">
 
 # How to run website
 1. Go to project directory and run build script
@@ -13,7 +14,7 @@ chmod +x build.sh && bash build.sh
 chmod +x runwebsite.sh && bash runwebsite.sh
 ```
 
-and in browser <a href="localhost:8000/account/">open this link</a>
+and in browser [open this link](localhost:8000/account/)
 
 Stop website with Ctrl+C or just close terminal window.
 
@@ -29,7 +30,7 @@ REMEMBER_ME = True
 REMEMBER_ME_EXPIRY = int(timedelta(days=7).total_seconds())
 ```
 
-You can go into admin panel on <a href="localhost:8000/admin/">this link</a>.
+You can go into admin panel on [this link](localhost:8000/admin/)
 ```
 usernaname: admin
 password:   admin
