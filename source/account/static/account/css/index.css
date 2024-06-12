@@ -1,0 +1,135 @@
+body
+{
+	background: #e0e0e0;
+	color: white;
+}
+
+.main
+{
+	background: #9d9d9d;
+	display: grid;
+	grid-template-areas:
+		'avatar avatar avatar data    data'
+		'avatar avatar avatar data    data'
+		'avatar avatar avatar empty   options';
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 1300px;
+	height: 700px;
+	border-radius: 100px;
+}
+
+.account-avatar
+{
+	grid-area: avatar;
+	margin-top: 25%;
+	margin-right: 40px;
+	margin-left: 40px;
+	text-align: left;
+}
+
+.account-data
+{
+	background: gray;
+	display: grid;
+	grid-area: data;
+	margin: 20px;
+	padding: 10px;
+	text-align: center;
+	font-size: 18px;
+	border-radius: 80px;
+}
+
+.options-menu
+{
+	margin-top: 7%;
+	margin-right: 50px;
+	grid-area: options;
+	text-align: center;
+}
+
+.date-joined-label
+{
+	font-size: 80%;
+	font-style: italic;
+}
+
+.option-button
+{
+	font-size: 20px;
+	width: 170px;
+	height: 50px;
+}
+
+.account-avatar-image
+{
+	width: 300px;
+	height: 300px;
+	object-fit: cover;
+	border-radius: 25%;
+}
+
+.choose-avatar-button
+{
+	font-size: 16px;
+	width: 320px;
+	height: 38px;
+	margin-top: 50px;
+}
+
+.change-avatar-button
+{
+	font-size: 20px;
+	width: 180px;
+	height: 50px;
+	margin-top: 50px;
+	margin-left: 50px;
+}
+
+.account-avatar-error
+{
+    background: #CA5252;
+	font-size: 18px;
+	width: 450px;
+	border-radius: 15px;
+	margin-top: 40px;
+	margin-left: 140px;
+}
+
+.password-sublabel
+{
+	font-size: 18px;
+	font-style: italic;
+	color: #cacaca;
+}
+
+.password-input
+{
+	width: 180px;
+}
+
+.errors-textbox
+{
+    background: #1A1A1A;
+    font-size: 16px;
+    color: #FA5C5C;
+    text-align: left;
+    width: 600px;
+    height: 100px;
+    margin-left: 20%;
+    border-radius: 10px;
+}
+
+table, tr, th
+{
+	padding-left: 8px;
+    vertical-align: top;
+	
+}
+
+.invalid-field
+{
+	text-align: right;
+}

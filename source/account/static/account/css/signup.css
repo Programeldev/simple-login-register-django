@@ -1,0 +1,60 @@
+body
+{
+	background: #e0e0e0;
+	color: white;
+}
+
+.main
+{
+	background: #9d9d9d;
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	padding: 70px 80px 40px 80px;
+	width: 800px;
+	height: 570px;
+	border-radius: 50px;
+}
+
+.errors-textbox
+{
+    background: #1A1A1A;
+    font-size: 15px;
+    color: #FA5C5C;
+    text-align: left;
+	width: 90%;
+    width: 500px;
+    height: 80px;
+    border-radius: 10px;
+	margin-left: 10%;
+}
+
+table, tr, th
+{
+	padding-left: 8px;
+	vertical-align: top;
+}
+
+.invalid-field
+{
+	text-align: right;
+}
+
+.signup-button
+{
+	margin-top: 30px;
+}
+
+.signin-label
+{
+	font-size: 18px;
+	margin-top: 30px;
+}
+
+.signin-link
+{
+	font-size: 18px;
+	color: #0057d1; 
+}

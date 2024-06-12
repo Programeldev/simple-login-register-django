@@ -1,0 +1,38 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block css %} 
+	<link rel="stylesheet" href="{% static 'account/css/delete.css' %}">
+{% endblock %}
+{% block title %} Deleting... {% endblock %}
+
+{% block script %}
+	<script>
+		function redirect_index()
+		{
+			location.replace("http://localhost:8000/account")
+		}
+		
+		function redirect_signup()
+		{
+			location.replace("http://localhost:8000/account/signup")
+		}
+	</script>
+{% endblock %}
+
+{% block content %}
+<div class="main" data-bs-theme="dark">
+	{% if deleted %}
+	<p class="final-label"> Account Deleted </p>
+	<button type="button" class="btn btn-primary signup-button" onclick="redirect_signup()"> Create new Account </button>
+	{% else %}
+	<p class="label"> Are you sure ? </p>
+	<p class="sublabel"> This action is permanent ! </p> 
+	<form method="post">
+		{% csrf_token %}
+		<button type="submit" class="btn btn-danger delete-button" name="delete-submit"> Delete Account </button>
+	</form>
+	<button type="button" class="btn btn-primary back-button" onclick="redirect_index()"> Go Back </button>
+	{% endif %}
+</div>
+{% endblock %}

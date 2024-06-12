@@ -1,0 +1,57 @@
+body
+{
+	background: #f6b6b6;
+	color: white;
+}
+
+.main
+{
+	background: #9d9d9d;
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	padding: 70px 80px 40px 80px;
+	width: 800px;
+	height: 480px;
+	border-radius: 50px;
+}
+
+.final-label
+{
+	font-size: 50px;
+	font-style: italic;
+	margin-top: 20px;
+}
+
+.signup-button
+{
+	font-size: 30px;
+	margin-top: 40px;
+}
+
+.label
+{
+	font-size: 45px;
+	font-style: italic;
+}
+
+.sublabel
+{
+	font-size: 35px;
+	font-style: underline;
+	margin-top: 30px;
+}
+
+.delete-button
+{
+	font-size: 27px;
+	margin-top: 50px;
+}
+
+.back-button
+{
+	font-size: 23px;
+	margin-top: 40px;
+}

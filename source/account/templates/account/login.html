@@ -1,0 +1,49 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block css %} 
+	<link rel="stylesheet" href="{% static 'account/css/login.css' %}">
+{% endblock %}
+{% block title %} Login to Account {% endblock %}
+{% block script %}
+<script>
+	function redirect_signup()
+	{
+		location.replace("http://localhost:8000/account/signup")
+	}
+</script>
+{% endblock %}
+{% block content %}
+	<div class="main" data-bs-theme="dark">
+		{% if validation_failed %}
+		<p class="invalid-label">Login or password is invalid, try again</p>
+		{% endif %}
+		<form method="post">
+			{% csrf_token %}
+			{% if form.username %}
+			<div class="form-floating mb-4">
+				<input type="text" class="form-control {{ validation_failed|safe }}" name="username" id="username" value="{{ usern }}" placeholder=" ">
+				<label for="username">Username</label>
+			</div>
+			{% endif %}
+			{% if form.email %}
+			<div class="form-floating mb-4">
+				<input type="email" class="form-control {{ validation_failed|safe }}" name="email" id="email" placeholder=" ">
+				<label for="email">Email</label>
+			</div>
+			{% endif %}
+			<div class="form-floating mb-4">
+				<input type="password" class="form-control mb-3 {{ validation_failed|safe }}" name="password" id="password" placeholder=" ">
+				<label for="password">Password</label>
+			</div>
+			{% if form.remember_me %}
+			<div class="form-check mb-4 remember-me-checkbox">
+				<input type="checkbox" class="form-check-input" name="remember_me" id="remember-me">
+				<label for="remember-me" class="form-check-label">Remember me</label>
+			</div>
+			{% endif %}
+			<input type="submit" class="btn btn-light btn-lg" value="Sign in">
+		</form>
+		<button type="button" onclick="redirect_signup()" class="btn btn-primary btn-sm mb-4 signup-button">Sign up</button>
+	</div>
+{% endblock %}
