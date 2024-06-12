@@ -29,6 +29,10 @@ class GuestOnlyView(View):
 # check if user is logged
 class UserOnlyView(View):
     def dispatch(self, request, *args, **kwargs):
+        # if admin is logged, logout
+        if request.user.is_staff:
+            logout(request)
+
         if not request.user.is_authenticated:
             return redirect('account:login')
 
